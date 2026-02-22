@@ -25,6 +25,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        basicItem(ModItems.OLD_SPEAR_HEAD.get());
+        basicItem(ModItems.OLD_SPEAR_SHAFT.get());
+        basicItem(ModItems.OLD_SPEAR_SCARF.get());
         basicItem(ModItems.DAWNBREAKER_HILT.get());
         basicItem(ModItems.DAWNBREAKER_BLADE.get());
         basicItem(ModItems.DAWNBREAKER_TIP.get());

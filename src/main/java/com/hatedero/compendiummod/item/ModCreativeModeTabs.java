@@ -16,9 +16,14 @@ public class ModCreativeModeTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CompendiumMod.MODID);
 
     public static final Supplier<CreativeModeTab> COMPENDIUM_TAB = CREATIVE_MODE_TAB.register("compendium_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.DAWNBREAKER.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.DAWNBREAKER_HILT.get()))
                     .title(Component.translatable("creativetab.compendiummod.compendium_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
+                        output.accept(ModItems.OLD_SPEAR_HEAD.get());
+                        output.accept(ModItems.OLD_SPEAR_SHAFT.get());
+                        output.accept(ModItems.OLD_SPEAR_SCARF.get());
+                        output.accept(ModItems.OLD_IRON_SPEAR.get());
+                        output.accept(ModItems.OLD_DRAGON_SLAYER_SPEAR.get());
                         output.accept(ModItems.DAWNBREAKER.get());
                         output.accept(ModItems.DAWNBREAKER_HILT.get());
                         output.accept(ModItems.DAWNBREAKER_BLADE.get());

@@ -1,0 +1,13 @@
+{
+  "values": {
+    "compendiummod:dawnbreaker_blade": {
+      "burn_time": 100000
+    },
+    "compendiummod:dawnbreaker_hilt": {
+      "burn_time": 90000
+    },
+    "compendiummod:dawnbreaker_tip": {
+      "burn_time": 90000
+    }
+  }
+}
