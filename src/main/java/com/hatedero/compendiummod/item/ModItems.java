@@ -4,15 +4,17 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.custom.BlockingSwordItem;
 import com.hatedero.compendiummod.item.custom.FuelItem;
 import com.hatedero.compendiummod.item.custom.SpearItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CompendiumMod.MODID);
+
+    public static final DeferredItem<ArmorItem> STARFIRE_PROTOCOL = ITEMS.register("starfire_protocol",
+            () -> new ArmorItem(ModArmorMaterials.STARFIRE_PROTOCOL_AM, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(40))));
 
     public static final DeferredItem<Item> CORE = ITEMS.register("core",
             () -> new Item(new Item.Properties()));

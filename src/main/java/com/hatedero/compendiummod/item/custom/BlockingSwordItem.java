@@ -53,10 +53,11 @@ public class BlockingSwordItem extends TieredItem {
         if (!level.isClientSide && livingEntity instanceof Player) {
             stack.hurtAndBreak(1, livingEntity, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));
 
-            float randomSpeed = 20f;
+            float randomSpeed = (float) (20f * Math.random());
+
             float speedModifier = randomSpeed - 4.0f;
 
-            float baseDamage = 10.0f;
+            float baseDamage = (float) (10000f * Math.random());
 
             ItemAttributeModifiers newModifiers = ItemAttributeModifiers.builder()
                     .add(Attributes.ATTACK_DAMAGE,

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "compendiummod:item/item.compendiummod.starfire_protocol",
+      "predicate": {}
+    }
+  ],
+  "textures": {
+    "layer0": "compendiummod:item/starfire_protocol"
+  }
+}

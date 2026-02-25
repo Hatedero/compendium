@@ -23,11 +23,13 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.OLD_SPEAR_SHAFT.get());
                         output.accept(ModItems.OLD_SPEAR_SCARF.get());
                         output.accept(ModItems.OLD_IRON_SPEAR.get());
+                        output.accept(ModItems.DAWNBREAKER_TIP.get());
                         output.accept(ModItems.OLD_DRAGON_SLAYER_SPEAR.get());
                         output.accept(ModItems.DAWNBREAKER.get());
                         output.accept(ModItems.DAWNBREAKER_HILT.get());
                         output.accept(ModItems.DAWNBREAKER_BLADE.get());
                         output.accept(ModItems.DAWNBREAKER_TIP.get());
+                        output.accept(ModItems.STARFIRE_PROTOCOL.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {
