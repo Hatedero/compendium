@@ -4,8 +4,10 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.ModItems;
 import com.hatedero.compendiummod.mana.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.ModAttributes;
+import com.ibm.icu.text.MessagePattern;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,6 +24,7 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.hatedero.compendiummod.mana.ModAttachments.MANA;
@@ -58,22 +61,28 @@ public class ModClientEvents {
             int mana = player.getData(MANA);
 
             if (mana == 0)
-                mana = 1;
+                return;
 
             var i = player.tickCount%mana;
-                double angle = i * (2 * Math.PI / points);
+
+            List<SimpleParticleType> particles = List.of(ParticleTypes.FLAME, ParticleTypes.SOUL_FIRE_FLAME);
+            double gap = player.getAttributeValue(ModAttributes.MAX_MANA)/particles.size();
+
+            for (int j = 0; j < particles.size(); j++) {
+                var angle = (gap*j + i) * (2 * Math.PI / points);
 
                 double offsetX = (Math.cos(angle) * radius * right.x);
                 double offsetY = (Math.sin(angle) * radius * up.y);
                 double offsetZ = (Math.cos(angle) * radius * right.z);
 
                 level.addParticle(
-                        ParticleTypes.FLAME,
+                        particles.get(j),
                         centerX + offsetX,
                         centerY + offsetY,
                         centerZ + offsetZ,
                         0, 0, 0
                 );
+            }
         }
     }
 
