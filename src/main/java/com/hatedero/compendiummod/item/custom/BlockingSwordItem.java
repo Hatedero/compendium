@@ -54,6 +54,8 @@ public class BlockingSwordItem extends TieredItem {
         if (!level.isClientSide && livingEntity instanceof Player) {
             stack.hurtAndBreak(1, livingEntity, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));
 
+            livingEntity.setData(MANA, (int) (Math.random() * livingEntity.getAttributeValue(ModAttributes.MAX_MANA)));
+
             ((Player) livingEntity).displayClientMessage(Component.literal("MAX MANA : " + livingEntity.getAttributeValue(ModAttributes.MAX_MANA) + " | CURRENT MANA : " + livingEntity.getData(MANA)), true);
 
             float randomSpeed = (float) (20f * Math.random());

@@ -2,9 +2,11 @@ package com.hatedero.compendiummod.event;
 
 import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.ModItems;
+import com.hatedero.compendiummod.mana.ManaHudOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +17,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.Random;
@@ -66,5 +70,12 @@ public class ModClientEvents {
                 );
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void registerGuiLayers(RegisterGuiLayersEvent event) {
+        event.registerAbove(VanillaGuiLayers.HOTBAR,
+                ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "mana_overlay"),
+                new ManaHudOverlay());
     }
 }
