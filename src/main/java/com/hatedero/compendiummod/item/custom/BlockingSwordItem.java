@@ -1,5 +1,6 @@
 package com.hatedero.compendiummod.item.custom;
 
+import com.hatedero.compendiummod.mana.ModAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -41,7 +42,6 @@ public class BlockingSwordItem extends TieredItem {
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if(level.isClientSide) player.sendSystemMessage(Component.literal("USE"));
         ItemStack itemstack = player.getItemInHand(hand);
         player.startUsingItem(hand);
         return InteractionResultHolder.consume(itemstack);
@@ -49,9 +49,10 @@ public class BlockingSwordItem extends TieredItem {
 
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
-        if(level.isClientSide && livingEntity instanceof Player) livingEntity.sendSystemMessage(Component.literal("USED FOR " + timeCharged));
         if (!level.isClientSide && livingEntity instanceof Player) {
             stack.hurtAndBreak(1, livingEntity, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));
+
+            ((Player) livingEntity).displayClientMessage(Component.literal(String.valueOf(livingEntity.getAttributeValue(ModAttributes.MAX_MANA))), true);
 
             float randomSpeed = (float) (20f * Math.random());
 

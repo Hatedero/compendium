@@ -45,7 +45,7 @@ public class ModClientEvents {
             Vec3 right = Vec3.directionFromRotation(0, yaw + 90).normalize();
             Vec3 up = new Vec3(0, 1, 0);
 
-            int points = 60;
+            int points = 5;
             double radius = 0.3;
 
             var i = player.tickCount%60;

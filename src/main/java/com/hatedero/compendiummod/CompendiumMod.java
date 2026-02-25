@@ -3,6 +3,7 @@ package com.hatedero.compendiummod;
 import com.hatedero.compendiummod.block.ModBlocks;
 import com.hatedero.compendiummod.item.ModCreativeModeTabs;
 import com.hatedero.compendiummod.item.ModItems;
+import com.hatedero.compendiummod.mana.ModAttributes;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -47,6 +48,8 @@ public class CompendiumMod {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModAttributes.register(modEventBus);
 
         //ModEffects.register(modEventBus);
 
