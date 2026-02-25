@@ -65,12 +65,10 @@ public class BlockingSwordItem extends TieredItem {
             Random random = new Random();
 
             if (instance != null) {
-                //instance.setBaseValue(random.nextDouble(0, 20));
-                instance.setBaseValue(1000);
+                instance.setBaseValue(360);
             }
 
-            //livingEntity.setData(MANA, (int) (Math.random() * livingEntity.getAttributeValue(ModAttributes.MAX_MANA)));
-            livingEntity.setData(MANA, 1000);
+            livingEntity.setData(MANA, 0.0);
 
             float randomSpeed = (float) (20f * Math.random());
 

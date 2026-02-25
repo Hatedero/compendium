@@ -58,7 +58,7 @@ public class ModClientEvents {
             int points = (int) player.getAttributeValue(ModAttributes.MAX_MANA);
             double radius = 1;
 
-            int mana = player.getData(MANA);
+            double mana = player.getData(MANA);
 
             if (mana == 0)
                 return;

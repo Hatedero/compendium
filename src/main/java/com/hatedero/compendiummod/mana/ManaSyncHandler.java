@@ -6,16 +6,16 @@ import net.neoforged.neoforge.attachment.AttachmentSyncHandler;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 
 import javax.annotation.Nullable;
-public class ManaSyncHandler implements AttachmentSyncHandler<Integer> {
+public class ManaSyncHandler implements AttachmentSyncHandler<Double> {
 
     @Override
-    public void write(RegistryFriendlyByteBuf buf, Integer attachment, boolean initialSync) {
-        buf.writeVarInt(attachment);
+    public void write(RegistryFriendlyByteBuf buf, Double attachment, boolean initialSync) {
+        buf.writeDouble(attachment);
     }
 
     @Override
-    public Integer read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable Integer previousValue) {
-        return buf.readVarInt();
+    public Double read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable Double previousValue) {
+        return buf.readDouble();
     }
 
     @Override
