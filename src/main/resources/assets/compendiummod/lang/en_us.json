@@ -20,6 +20,9 @@
 
   "item.compendiummod.starfire_protocol_chestplate": "Starfire Protocol",
 
-  "creativetab.compendiummod.compendium_tab": "Compendium"
+  "creativetab.compendiummod.compendium_tab": "Compendium",
+
+  "key.categories.compendiummod": "Compendium",
+  "key.compendiummod.show_mana_action": "Show mana"
 
 }

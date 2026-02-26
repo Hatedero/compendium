@@ -21,6 +21,14 @@ public class ModAttachments {
                     .build()
     );
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> SHOW_MANA = ATTACHMENT_TYPES.register(
+            "show_mana", () -> AttachmentType.builder(() -> true)
+                    .serialize(Codec.BOOL)
+                    .sync(new ShowManaSyncHandler())
+                    .copyOnDeath()
+                    .build()
+    );
+
     public static void register(IEventBus eventBus) {
         ATTACHMENT_TYPES.register(eventBus);
     }

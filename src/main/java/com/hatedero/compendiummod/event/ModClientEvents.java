@@ -4,6 +4,7 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.ModItems;
 import com.hatedero.compendiummod.mana.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.ModAttributes;
+import com.hatedero.compendiummod.util.ModKeybinds;
 import com.ibm.icu.text.MessagePattern;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
@@ -22,6 +23,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.registries.datamaps.DataMapEntry;
@@ -32,6 +34,7 @@ import java.util.Map;
 import java.util.Random;
 
 import static com.hatedero.compendiummod.mana.ModAttachments.MANA;
+import static com.hatedero.compendiummod.mana.ModAttachments.SHOW_MANA;
 
 @EventBusSubscriber(modid = CompendiumMod.MODID, value = Dist.CLIENT)
 public class ModClientEvents {
@@ -45,47 +48,43 @@ public class ModClientEvents {
         if (!level.isClientSide) return;
 
         ItemStack chestSlot = player.getItemBySlot(EquipmentSlot.CHEST);
-        if (chestSlot.is(ModItems.STARFIRE_PROTOCOL)) {
+        if (player.getData(SHOW_MANA)) {
 
             double distance = 0.3;
             Vec3 look = player.getLookAngle();
-            //Vec3 forward = new Vec3(look.x, 0, look.z).normalize().scale(distance);
+            Vec3 forward = new Vec3(look.x, 0, look.z).normalize().scale(distance);
 
             float bodyYaw = player.yBodyRot;
             Direction bodyDirection = Direction.fromYRot(bodyYaw);
             Vec3 bodyVector = Vec3.directionFromRotation(0, bodyYaw);
-            Vec3 forward = new Vec3(bodyVector.x, 0, bodyVector.z).normalize().scale(distance);
+            /*Vec3 forward = new Vec3(bodyVector.x, 0, bodyVector.z).normalize().scale(distance);*/
 
             double centerX = player.getX() + forward.x;
             double centerY = player.getY() + player.getEyeHeight() * 0.7;
             double centerZ = player.getZ() + forward.z;
-
-
 
             float yaw = player.getYRot();
             Vec3 right = Vec3.directionFromRotation(0, yaw + 90).normalize();
             Vec3 up = new Vec3(0, 1, 0);
 
             int points = (int) player.getAttributeValue(ModAttributes.MAX_MANA);
-            double radius = 0.2;
+            double radius = 0.3;
 
             double mana = player.getData(MANA);
 
             if (mana == 0)
                 return;
 
-            var i = player.tickCount%mana;
-
             List<SimpleParticleType> particles = List.of(ParticleTypes.FLAME, ParticleTypes.SOUL_FIRE_FLAME);
             double gap = player.getAttributeValue(ModAttributes.MAX_MANA)/particles.size();
 
-            Map<Vec3, SimpleParticleType> directions = new HashMap<>();
+            /*Map<Vec3, SimpleParticleType> directions = new HashMap<>();
             directions.put(new Vec3(1,1,0), ParticleTypes.FLAME);
             directions.put(new Vec3(-1,-1,0), ParticleTypes.SOUL_FIRE_FLAME);
             directions.put(new Vec3(1,-1,0), ParticleTypes.FLAME);
             directions.put(new Vec3(-1,1,0), ParticleTypes.SOUL_FIRE_FLAME);
             directions.put(new Vec3(0,0,1), ParticleTypes.END_ROD);
-            float amp = 0.015f;
+            float amp = 0.02f;
 
             directions.forEach((mov, part) -> {
                 level.addParticle(
@@ -97,9 +96,11 @@ public class ModClientEvents {
                         mov.y * amp,
                         mov.z * amp
                 );
-            });
+            });*/
 
-            /*for (int j = 0; j < particles.size(); j++) {
+            var i = player.tickCount%mana;
+
+            for (int j = 0; j < particles.size(); j++) {
                 var angle = (gap*j + i) * (2 * Math.PI / points);
 
                 double offsetX = (Math.cos(angle) * radius * right.x);
@@ -113,7 +114,7 @@ public class ModClientEvents {
                         centerZ + offsetZ,
                         0, 0, 0
                 );
-            }*/
+            }
         }
     }
 
@@ -122,5 +123,10 @@ public class ModClientEvents {
         event.registerAbove(VanillaGuiLayers.HOTBAR,
                 ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "mana_overlay"),
                 new ManaHudOverlay());
+    }
+
+    @SubscribeEvent
+    public static void registerKeys(RegisterKeyMappingsEvent event) {
+        event.register(ModKeybinds.SHOW_MANA_ACTION_KEY);
     }
 }
