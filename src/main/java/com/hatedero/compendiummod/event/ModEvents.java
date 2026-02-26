@@ -26,5 +26,13 @@ public class ModEvents {
                 EntityType.PLAYER,
                 ModAttributes.MANA_REGEN
         );
+        event.add(
+                EntityType.PLAYER,
+                ModAttributes.MANA_OUTPUT
+        );
+        event.add(
+                EntityType.PLAYER,
+                ModAttributes.MANA_INPUT
+        );
     }
 }

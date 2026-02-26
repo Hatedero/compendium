@@ -4,6 +4,10 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.custom.BlockingSwordItem;
 import com.hatedero.compendiummod.item.custom.FuelItem;
 import com.hatedero.compendiummod.item.custom.SpearItem;
+import com.hatedero.compendiummod.mana.ModAttributes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -45,7 +49,11 @@ public class ModItems {
 
     public static final DeferredItem<Item> DAWNBREAKER = ITEMS.register("dawnbreaker",
             () -> new BlockingSwordItem(Tiers.NETHERITE,
-                    new Item.Properties().attributes(BlockingSwordItem.createAttributes(Tiers.NETHERITE, 5, 1F))));
+                    new Item.Properties().attributes(BlockingSwordItem.createAttributes(Tiers.NETHERITE, 5, 1F).withModifierAdded(
+                            ModAttributes.MANA_INPUT,
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "mana_input_boost"),0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                            EquipmentSlotGroup.MAINHAND
+                    ))));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

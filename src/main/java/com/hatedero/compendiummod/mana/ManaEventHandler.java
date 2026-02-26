@@ -16,13 +16,14 @@ public class ManaEventHandler {
             Double currentMana = player.getData(ModAttachments.MANA);
             Double maxMana = player.getAttributeValue(ModAttributes.MAX_MANA);
             Double manaRegen = player.getAttributeValue(ModAttributes.MANA_REGEN)/20;
+            Double manaInput = player.getAttributeValue(ModAttributes.MANA_INPUT);
 
-            if (currentMana < maxMana ) {
+            if (currentMana < maxMana && currentMana + (manaRegen * manaInput) < maxMana) {
                 if (currentMana + manaRegen > maxMana) {
                     player.setData(ModAttachments.MANA, maxMana);
                     return;
                 }
-                player.setData(ModAttachments.MANA, currentMana + manaRegen);
+                player.setData(ModAttachments.MANA, currentMana + (manaRegen * manaInput));
             }
         }
     }

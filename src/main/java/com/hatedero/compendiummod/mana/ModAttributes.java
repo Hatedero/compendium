@@ -30,6 +30,22 @@ public class ModAttributes {
             ).setSyncable(true)
     );
 
+    public static final Holder<Attribute> MANA_OUTPUT = ATTRIBUTES.register("mana_output", () -> new RangedAttribute(
+                    "attributes."+CompendiumMod.MODID+".mana_output",
+                    1,
+                    0,
+                    1000000
+            ).setSyncable(true)
+    );
+
+    public static final Holder<Attribute> MANA_INPUT = ATTRIBUTES.register("mana_input", () -> new RangedAttribute(
+                    "attributes."+CompendiumMod.MODID+".mana_input",
+                    1,
+                    0,
+                    1000000
+            ).setSyncable(true)
+    );
+
     public static void register(IEventBus eventBus) {
         ATTRIBUTES.register(eventBus);
     }
