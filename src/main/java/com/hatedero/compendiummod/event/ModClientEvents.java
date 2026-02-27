@@ -35,6 +35,7 @@ import java.util.Random;
 
 import static com.hatedero.compendiummod.mana.ModAttachments.MANA;
 import static com.hatedero.compendiummod.mana.ModAttachments.SHOW_MANA;
+import static com.hatedero.compendiummod.particles.ParticleUtils.drawParticleCircle;
 
 @EventBusSubscriber(modid = CompendiumMod.MODID, value = Dist.CLIENT)
 public class ModClientEvents {
@@ -48,47 +49,47 @@ public class ModClientEvents {
         if (!level.isClientSide) return;
 
         if (player.getData(SHOW_MANA)) {
-
-            double distance = 0.3;
-            Vec3 look = player.getLookAngle();
-            Vec3 forward = new Vec3(look.x, 0, look.z).normalize().scale(distance);
-
-            double centerX = player.getX() + forward.x;
-            double centerY = player.getY() + player.getEyeHeight() * 0.7;
-            double centerZ = player.getZ() + forward.z;
-
-            float yaw = player.getYRot();
-            Vec3 right = Vec3.directionFromRotation(0, yaw + 90).normalize();
-            Vec3 up = new Vec3(0, 1, 0);
-
-            int points = (int) player.getAttributeValue(ModAttributes.MAX_MANA);
-            double radius = 1.5;
-
             double mana = player.getData(MANA);
+            double maxMana = player.getAttributeValue(ModAttributes.MAX_MANA);
 
-            if (mana == 0)
-                return;
+            if (maxMana <= 0)
+                    return;
 
-            List<SimpleParticleType> particles = List.of(ParticleTypes.FLAME, ParticleTypes.SOUL_FIRE_FLAME);
-            double gap = player.getAttributeValue(ModAttributes.MAX_MANA)/particles.size();
+            double manaRegen = player.getAttributeValue(ModAttributes.MANA_REGEN);
 
-            var i = player.tickCount%mana;
+            int manaPercentage = (int) (mana/maxMana * 10);
 
-            for (int j = 0; j < particles.size(); j++) {
-                var angle = (gap*j + i) * (2 * Math.PI / points);
+            Vec3 pos = player.position();
 
-                double offsetX = (Math.cos(angle) * radius * right.x);
-                double offsetY = (Math.sin(angle) * radius * up.y);
-                double offsetZ = (Math.cos(angle) * radius * right.z);
+            double radius = (maxMana*0.1)/2.0;
+            int dots = 32;
 
-                level.addParticle(
-                        particles.get(j),
-                        centerX + offsetX,
-                        centerY + offsetY,
-                        centerZ + offsetZ,
-                        0, 0, 0
-                );
+            //DRAW MAX MANA BOUNDARY
+            drawParticleCircle(
+                    player.level(),
+                    pos,
+                    radius,
+                    dots,
+                    0,
+                    ParticleTypes.FLAME,
+                    new Vec3(0,0,0)
+            );
+
+            //DRAW MANA PERCENTAGE
+            for(int i = 0; i < manaPercentage; i++) {
+                if (player.tickCount % (i+1) == 0) {
+                    drawParticleCircle(
+                            player.level(),
+                            pos,
+                            radius * ((double) i / 10),
+                            dots,
+                            0.4 * ((double) i / 10),
+                            ParticleTypes.SOUL_FIRE_FLAME,
+                            new Vec3(0, (manaRegen/maxMana + level.random.nextFloat()) * 0.015 , 0)
+                    );
+                }
             }
+
         }
     }
 
