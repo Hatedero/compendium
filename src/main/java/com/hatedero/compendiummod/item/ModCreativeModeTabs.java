@@ -31,6 +31,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DAWNBREAKER_TIP.get());
                         output.accept(ModItems.STARFIRE_PROTOCOL.get());
                         output.accept(ModItems.CONSUME_SPELL.get());
+                        output.accept(ModItems.REVERSE_CURSED_TECHNIQUE_SPELL.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

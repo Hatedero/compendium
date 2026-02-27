@@ -40,6 +40,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.CONSUME_SPELL.get());
+        basicItem(ModItems.REVERSE_CURSED_TECHNIQUE_SPELL.get());
         basicItem(ModItems.OLD_SPEAR_HEAD.get());
         basicItem(ModItems.OLD_SPEAR_SHAFT.get());
         basicItem(ModItems.OLD_SPEAR_SCARF.get());

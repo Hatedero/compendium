@@ -4,7 +4,8 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.custom.BlockingSwordItem;
 import com.hatedero.compendiummod.item.custom.FuelItem;
 import com.hatedero.compendiummod.item.custom.SpearItem;
-import com.hatedero.compendiummod.item.custom.SpellItem;
+import com.hatedero.compendiummod.item.custom.spells.ReverseCursedTechniqueSpellItem;
+import com.hatedero.compendiummod.item.custom.spells.SpellItem;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -25,7 +26,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> CONSUME_SPELL = ITEMS.register("consume_spell",
-            () -> new SpellItem(new Item.Properties()));
+            () -> new SpellItem(new Item.Properties(), 3, 1));
+
+    public static final DeferredItem<Item> REVERSE_CURSED_TECHNIQUE_SPELL = ITEMS.register("reverse_cursed_technique_spell",
+            () -> new ReverseCursedTechniqueSpellItem(new Item.Properties(), 5, 5));
 
     public static final DeferredItem<Item> OLD_SPEAR_HEAD = ITEMS.register("old_spear_head",
             () -> new Item(new Item.Properties()));
@@ -55,7 +59,7 @@ public class ModItems {
             () -> new BlockingSwordItem(Tiers.NETHERITE,
                     new Item.Properties().attributes(BlockingSwordItem.createAttributes(Tiers.NETHERITE, 5, 1F).withModifierAdded(
                             ModAttributes.MANA_INPUT,
-                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "mana_input_boost"),0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                            new AttributeModifier(ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "mana_input_boost"),100, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
                             EquipmentSlotGroup.MAINHAND
                     ))));
 
