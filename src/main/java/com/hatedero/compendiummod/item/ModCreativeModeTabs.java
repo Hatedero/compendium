@@ -30,6 +30,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DAWNBREAKER_BLADE.get());
                         output.accept(ModItems.DAWNBREAKER_TIP.get());
                         output.accept(ModItems.STARFIRE_PROTOCOL.get());
+                        output.accept(ModItems.CONSUME_SPELL.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

@@ -21,7 +21,7 @@ public class ManaHudOverlay implements LayeredDraw.Layer {
         double mana = player.getData(ModAttachments.MANA);
         double max_mana = player.getAttributeValue(ModAttributes.MAX_MANA);
         double mana_regen = player.getAttributeValue(ModAttributes.MANA_REGEN);
-        String text = "Mana: " + df.format(mana) + "/" + df.format(max_mana);
+        String text = df.format(mana) + "/" + df.format(max_mana);
         String secondText = (mana_regen > 0 ? "+ " : "- ") + df.format(mana_regen);
 
         int x = guiGraphics.guiWidth() - 10 - minecraft.font.width(text);

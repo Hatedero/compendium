@@ -4,6 +4,7 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.item.custom.BlockingSwordItem;
 import com.hatedero.compendiummod.item.custom.FuelItem;
 import com.hatedero.compendiummod.item.custom.SpearItem;
+import com.hatedero.compendiummod.item.custom.SpellItem;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -22,6 +23,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> CORE = ITEMS.register("core",
             () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> CONSUME_SPELL = ITEMS.register("consume_spell",
+            () -> new SpellItem(new Item.Properties()));
 
     public static final DeferredItem<Item> OLD_SPEAR_HEAD = ITEMS.register("old_spear_head",
             () -> new Item(new Item.Properties()));

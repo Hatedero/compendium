@@ -46,6 +46,30 @@ public class ModAttributes {
             ).setSyncable(true)
     );
 
+    public static final Holder<Attribute> MANA_EFFICIENCY = ATTRIBUTES.register("mana_efficiency", () -> new RangedAttribute(
+                    "attributes."+CompendiumMod.MODID+".mana_efficiency",
+                    1,
+                    0,
+                    1000000
+            ).setSyncable(true)
+    );
+
+    public static final Holder<Attribute> COOLDOWN_MULTIPLIER = ATTRIBUTES.register("cooldown_multiplier", () -> new RangedAttribute(
+                    "attributes."+CompendiumMod.MODID+".cooldown_multiplier",
+                    1,
+                    0,
+                    1000000
+            ).setSyncable(true)
+    );
+
+    public static final Holder<Attribute> CASTING_SPEED = ATTRIBUTES.register("casting_speed", () -> new RangedAttribute(
+                    "attributes."+CompendiumMod.MODID+".casting_speed",
+                    1,
+                    0,
+                    1000000
+            ).setSyncable(true)
+    );
+
     public static void register(IEventBus eventBus) {
         ATTRIBUTES.register(eventBus);
     }

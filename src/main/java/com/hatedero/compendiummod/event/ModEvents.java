@@ -18,21 +18,11 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void modifyDefaultAttributes(EntityAttributeModificationEvent event) {
-        event.add(
-                EntityType.PLAYER,
-                ModAttributes.MAX_MANA
-        );
-        event.add(
-                EntityType.PLAYER,
-                ModAttributes.MANA_REGEN
-        );
-        event.add(
-                EntityType.PLAYER,
-                ModAttributes.MANA_OUTPUT
-        );
-        event.add(
-                EntityType.PLAYER,
-                ModAttributes.MANA_INPUT
-        );
+        ModAttributes.ATTRIBUTES.getEntries().forEach(entry -> {
+            event.add(
+                    EntityType.PLAYER,
+                    entry
+            );
+        });
     }
 }
