@@ -62,7 +62,7 @@ public class ModClientEvents {
             Vec3 pos = player.position();
 
             double radius = (maxMana*0.1)/2.0;
-            int dots = 32;
+            int dots = 180;
 
             //DRAW MAX MANA BOUNDARY
             drawParticleCircle(
@@ -71,7 +71,7 @@ public class ModClientEvents {
                     radius,
                     dots,
                     0,
-                    ParticleTypes.FLAME,
+                    ParticleTypes.SMALL_FLAME,
                     new Vec3(0,0,0)
             );
 
@@ -84,7 +84,7 @@ public class ModClientEvents {
                             radius * ((double) i / 10),
                             dots,
                             0.4 * ((double) i / 10),
-                            ParticleTypes.SOUL_FIRE_FLAME,
+                            ParticleTypes.CHERRY_LEAVES,
                             new Vec3(0, (manaRegen/maxMana + level.random.nextFloat()) * 0.015 , 0)
                     );
                 }
