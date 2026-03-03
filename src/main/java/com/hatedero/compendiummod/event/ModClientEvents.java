@@ -6,7 +6,12 @@ import com.hatedero.compendiummod.mana.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.util.ModKeybinds;
 import com.ibm.icu.text.MessagePattern;
+import com.zigythebird.playeranim.animation.PlayerAnimationController;
+import com.zigythebird.playeranim.api.PlayerAnimationAccess;
+import com.zigythebird.playeranim.api.PlayerAnimationFactory;
+import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -36,6 +41,7 @@ import java.util.Random;
 import static com.hatedero.compendiummod.mana.ModAttachments.MANA;
 import static com.hatedero.compendiummod.mana.ModAttachments.SHOW_MANA;
 import static com.hatedero.compendiummod.particles.ParticleUtils.drawParticleCircle;
+import static com.zigythebird.playeranim.PlayerAnimLibMod.ANIMATION_LAYER_ID;
 
 @EventBusSubscriber(modid = CompendiumMod.MODID, value = Dist.CLIENT)
 public class ModClientEvents {
@@ -49,6 +55,9 @@ public class ModClientEvents {
         if (!level.isClientSide) return;
 
         if (player.getData(SHOW_MANA)) {
+            PlayerAnimationController controller = (PlayerAnimationController) PlayerAnimationAccess.getPlayerAnimationLayer(
+                    (AbstractClientPlayer) player, ANIMATION_LAYER_ID);
+            controller.triggerAnimation(ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "ascend"));
             double mana = player.getData(MANA);
             double maxMana = player.getAttributeValue(ModAttributes.MAX_MANA);
 
@@ -84,7 +93,7 @@ public class ModClientEvents {
                             radius * ((double) i / 10),
                             dots,
                             0.4 * ((double) i / 10),
-                            ParticleTypes.CHERRY_LEAVES,
+                            ParticleTypes.SOUL_FIRE_FLAME,
                             new Vec3(0, (manaRegen/maxMana + level.random.nextFloat()) * 0.015 , 0)
                     );
                 }
