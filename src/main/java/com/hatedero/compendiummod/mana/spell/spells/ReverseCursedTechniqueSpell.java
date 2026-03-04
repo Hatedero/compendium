@@ -2,6 +2,7 @@ package com.hatedero.compendiummod.mana.spell.spells;
 
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.Spell;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,6 +49,6 @@ public class ReverseCursedTechniqueSpell extends Spell {
             livingEntity.setData(CAST_COOLDOWN, getUseDuration());
             livingEntity.setData(IS_CHARGING, false);
             livingEntity.setData(CHARGE_TIME, 0);
-        };
+        }
     }
 }

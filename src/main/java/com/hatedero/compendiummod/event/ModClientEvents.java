@@ -118,6 +118,7 @@ public class ModClientEvents {
             int newValue = playerChargeTime + 1;
             player.setData(CHARGE_TIME, newValue);
             player.displayClientMessage(Component.literal("USING " + spell.getName() + " FOR - : " + newValue/20 + "s"), true);
+            spell.chargeTick(level, player, newValue);
         }
     }
 

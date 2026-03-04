@@ -36,4 +36,7 @@ public class SpellRegistry {
 
     public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
             () -> new ReverseCursedTechniqueSpell("Reverse Cursed Technique", 5));
+
+    public static final DeferredHolder<Spell, Spell> FIREBALL = SPELLS.register("fireball",
+            () -> new ReverseCursedTechniqueSpell("Fireball", 2));
 }
