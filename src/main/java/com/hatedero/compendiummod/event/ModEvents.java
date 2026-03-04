@@ -16,8 +16,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import static com.hatedero.compendiummod.mana.ModAttachments.CAST_COOLDOWN;
-import static com.hatedero.compendiummod.mana.ModAttachments.CURRENT_SPELL_ID;
+import static com.hatedero.compendiummod.mana.ModAttachments.*;
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.SPELLS;
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.getSpell;
 
@@ -41,14 +40,17 @@ public class ModEvents {
 
         if (!level.isClientSide) {
             boolean isCharging = player.getData(ModAttachments.IS_CHARGING);
+            int manaCharged = player.getData(CHARGE_TIME);
             int cooldown = player.getData(CAST_COOLDOWN);
+            Spell spell = getSpell(player.level(), player.getData(CURRENT_SPELL_ID));
 
             if (isCharging) {
                 player.setData(ModAttachments.CHARGE_TIME, player.getData(ModAttachments.CHARGE_TIME) + 1 );
-                Spell spell = getSpell(player.level(), player.getData(CURRENT_SPELL_ID));
                 spell.chargeTick(level, player, player.getData(ModAttachments.CHARGE_TIME));
             } else if (cooldown > 0) {
                 player.setData(CAST_COOLDOWN,  cooldown - 1);
+            } else if (!isCharging && manaCharged > 0) {
+                spell.release(level, player, player.getData(ModAttachments.CHARGE_TIME));
             }
         }
     }

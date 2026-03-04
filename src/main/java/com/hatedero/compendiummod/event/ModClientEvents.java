@@ -127,9 +127,22 @@ public class ModClientEvents {
         if (player == null) return;
 
         int cooldown = player.getData(CAST_COOLDOWN);
+
         if (cooldown > 0) {
-            String text = "Cooldown: " + (cooldown / 20) + "s";
-            event.getGuiGraphics().drawString(Minecraft.getInstance().font, text, 10, 10, 0xFFFFFF);
+            float maxCooldown = 100.0f;
+            float progress = Math.min(1.0f, cooldown / maxCooldown);
+
+            int barWidth = 50;
+            int barHeight = 4;
+            int x = (event.getGuiGraphics().guiWidth() - barWidth) / 2;
+            int y = 10;
+
+            event.getGuiGraphics().fill(x, y, x + barWidth, y + barHeight, 0xAA111111);
+
+            int currentProgressWidth = (int) (barWidth * progress);
+            event.getGuiGraphics().fill(x, y, x + currentProgressWidth, y + barHeight, 0xAAFFFFFF);
+
+            event.getGuiGraphics().renderOutline(x - 1, y - 1, barWidth + 2, barHeight + 2, 0xAAFFFFFF);
         }
     }
 
