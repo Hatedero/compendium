@@ -113,8 +113,6 @@ public class ModClientEvents {
 
         if (player.getData(IS_CHARGING) && spell != null) {
             int playerChargeTime = player.getData(CHARGE_TIME);
-            //int newValue = playerChargeTime + 1;
-            //player.setData(CHARGE_TIME, newValue);
             player.displayClientMessage(Component.literal("USING " + spell.getName() + " FOR - : " + playerChargeTime/20 + "s"), true);
             spell.chargeTick(level, player, playerChargeTime);
         }
@@ -137,9 +135,13 @@ public class ModClientEvents {
         if (player == null) return;
 
         int cooldown = player.getData(CAST_COOLDOWN);
+        float maxCooldown = getSpell(player.level(), player.getData(CURRENT_SPELL_ID)).getUseDuration();
 
+        /*
+        NOT ACCURATE AS PLAYER CAN CHANGE SPELL WHILE IN COOLDOWN
+        But, doesn't matter since cooldown is gonna be on individual spell and not player cast
+        */
         if (cooldown > 0) {
-            float maxCooldown = 100.0f;
             float progress = Math.min(1.0f, cooldown / maxCooldown);
 
             int barWidth = 50;
