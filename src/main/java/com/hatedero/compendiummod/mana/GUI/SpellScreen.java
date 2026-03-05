@@ -30,7 +30,7 @@ public class SpellScreen extends Screen {
                             button -> {
                                 PacketDistributor.sendToServer(new CurrentSpellIdUpdatePayload(entry.getRegisteredName().replaceAll("compendiummod:", "")));
                             })
-                    .bounds((this.width - bw )/2, (this.height - bh)/ 2 + index.get() * bh * 2, bw, bh)
+                    .bounds((this.width - bw )/2, 10 + index.get() * bh * 2, bw, bh)
                     .tooltip(Tooltip.create(Component.literal("Change Spell")))
                     .build());
             index.getAndIncrement();

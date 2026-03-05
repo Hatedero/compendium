@@ -1,6 +1,7 @@
 package com.hatedero.compendiummod.mana.spell;
 
 import com.hatedero.compendiummod.CompendiumMod;
+import com.hatedero.compendiummod.mana.spell.spells.BlinkSpell;
 import com.hatedero.compendiummod.mana.spell.spells.DashSpell;
 import com.hatedero.compendiummod.mana.spell.spells.DismantleSpell;
 import com.hatedero.compendiummod.mana.spell.spells.ReverseCursedTechniqueSpell;
@@ -41,4 +42,7 @@ public class SpellRegistry {
 
     public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
             () -> new DashSpell("Icarus Dash", 1));
+
+    public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blink",
+            () -> new BlinkSpell("Blink", 1));
 }
