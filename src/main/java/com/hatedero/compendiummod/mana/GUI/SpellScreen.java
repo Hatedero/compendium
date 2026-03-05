@@ -1,6 +1,5 @@
 package com.hatedero.compendiummod.mana.GUI;
 
-import com.hatedero.compendiummod.mana.packets.CurrentSpellIdSyncHandler;
 import com.hatedero.compendiummod.network.CurrentSpellId.CurrentSpellIdUpdatePayload;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -8,6 +7,10 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.hatedero.compendiummod.mana.spell.SpellRegistry.SPELLS;
 
 public class SpellScreen extends Screen {
     public SpellScreen(Component title) {
@@ -19,24 +22,19 @@ public class SpellScreen extends Screen {
         int bw = 100;
         int bh = 20;
         int gap = 10;
+        AtomicInteger index = new AtomicInteger();
 
-        this.addRenderableWidget(Button.builder(
-                        Component.literal("Reverse Cursed Technique"),
-                        button -> {
-                            PacketDistributor.sendToServer(new CurrentSpellIdUpdatePayload("reverse_cursed_technique"));
-                        })
-                .bounds(this.width / 2 - bw - (gap / 2), this.height / 2, bw, bh)
-                .tooltip(Tooltip.create(Component.literal("Change Spell")))
-                .build());
-
-        this.addRenderableWidget(Button.builder(
-                        Component.literal("Dismantle"),
-                        button -> {
-                            PacketDistributor.sendToServer(new CurrentSpellIdUpdatePayload("dismantle"));
-                        })
-                .bounds(this.width / 2 + (gap / 2), this.height / 2, bw, bh)
-                .tooltip(Tooltip.create(Component.literal("Change Spell")))
-                .build());
+        SPELLS.getEntries().forEach(entry -> {
+            this.addRenderableWidget(Button.builder(
+                            Component.literal(entry.getRegisteredName().replaceAll("compendiummod:", "")),
+                            button -> {
+                                PacketDistributor.sendToServer(new CurrentSpellIdUpdatePayload(entry.getRegisteredName().replaceAll("compendiummod:", "")));
+                            })
+                    .bounds((this.width - bw )/2, (this.height - bh)/ 2 + index.get() * bh * 2, bw, bh)
+                    .tooltip(Tooltip.create(Component.literal("Change Spell")))
+                    .build());
+            index.getAndIncrement();
+        });
     }
 
     @Override

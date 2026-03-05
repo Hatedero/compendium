@@ -44,6 +44,13 @@ public class ModEvents {
             int cooldown = player.getData(CAST_COOLDOWN);
             Spell spell = getSpell(player.level(), player.getData(CURRENT_SPELL_ID));
 
+            if (spell == null) {
+                player.setData(IS_CHARGING, false);
+                player.setData(CHARGE_TIME, 0);
+                player.setData(CAST_COOLDOWN, 0);
+                return;
+            }
+
             if (isCharging) {
                 player.setData(ModAttachments.CHARGE_TIME, player.getData(ModAttachments.CHARGE_TIME) + 1 );
                 spell.chargeTick(level, player, player.getData(ModAttachments.CHARGE_TIME));
