@@ -2,6 +2,7 @@ package com.hatedero.compendiummod.mana.spell.spells;
 
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.Spell;
+import net.minecraft.advancements.critereon.FallAfterExplosionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;

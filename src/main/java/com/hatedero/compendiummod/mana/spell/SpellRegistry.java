@@ -1,6 +1,7 @@
 package com.hatedero.compendiummod.mana.spell;
 
 import com.hatedero.compendiummod.CompendiumMod;
+import com.hatedero.compendiummod.mana.spell.spells.DashSpell;
 import com.hatedero.compendiummod.mana.spell.spells.DismantleSpell;
 import com.hatedero.compendiummod.mana.spell.spells.ReverseCursedTechniqueSpell;
 import net.minecraft.core.Registry;
@@ -37,4 +38,7 @@ public class SpellRegistry {
 
     public static final DeferredHolder<Spell, Spell> DISMANTLE = SPELLS.register("dismantle",
             () -> new DismantleSpell("Dismantle", 3));
+
+    public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
+            () -> new DashSpell("Icarus Dash", 1));
 }
