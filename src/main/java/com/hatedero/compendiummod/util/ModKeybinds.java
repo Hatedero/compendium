@@ -3,7 +3,10 @@ package com.hatedero.compendiummod.util;
 import com.hatedero.compendiummod.CompendiumMod;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
+import net.neoforged.bus.api.IEventBus;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.List;
 
 public class ModKeybinds {
     public static final String KEY_CATEGORY = "key.categories."+ CompendiumMod.MODID;

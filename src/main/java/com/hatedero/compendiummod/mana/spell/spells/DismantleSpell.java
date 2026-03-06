@@ -17,8 +17,8 @@ import static com.hatedero.compendiummod.mana.ModAttachments.*;
 import static com.hatedero.compendiummod.mana.ModAttachments.IS_CHARGING;
 
 public class DismantleSpell extends Spell {
-    public DismantleSpell(String name, float costPerTick) {
-        super(name, costPerTick);
+    public DismantleSpell(float costPerTick) {
+        super(costPerTick);
     }
 
     @Override

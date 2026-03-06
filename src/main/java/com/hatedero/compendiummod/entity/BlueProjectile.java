@@ -43,11 +43,11 @@ public class BlueProjectile extends AbstractHurtingProjectile {
         super.tick();
 
         Vec3 movement = this.getDeltaMovement();
-        double speedLimit = 0.5D;
+        double speedLimit = 0.7D;
 
         if (!this.level().isClientSide()) {
-            int attempts = this.age%20*3;
-            double blockRadius = this.age%20*2;
+            int attempts = this.age%20*3+2;
+            double blockRadius = this.age%20*2+1;
 
             for (int i = 0; i < attempts; i++) {
                 BlockPos randomPos = this.blockPosition().offset(
@@ -56,19 +56,7 @@ public class BlueProjectile extends AbstractHurtingProjectile {
                         this.level().random.nextInt((int) blockRadius * 2) - (int) blockRadius
                 );
 
-                BlockState state = this.level().getBlockState(randomPos);
-
-                if (!state.isAir() && state.getDestroySpeed(this.level(), randomPos) >= 0) {
-
-                    FallingBlockEntity fallingBlock = FallingBlockEntity.fall(this.level(), randomPos, state);
-
-                    fallingBlock.dropItem = false;
-
-                    this.level().removeBlock(randomPos, false);
-
-                    fallingBlock.setDeltaMovement(0, 0.1, 0);
-                    this.level().addFreshEntity(fallingBlock);
-                }
+                tryTurningBlockInBlockEntity(randomPos);
             }
         }
 
@@ -76,7 +64,7 @@ public class BlueProjectile extends AbstractHurtingProjectile {
             this.setDeltaMovement(movement.normalize().scale(speedLimit));
         }
 
-        double pullStrength = 0.15D;
+        double pullStrength = 0.5D;
         double radius = 3.0D;
 
         AABB area = this.getBoundingBox().inflate(radius);
@@ -135,22 +123,31 @@ public class BlueProjectile extends AbstractHurtingProjectile {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         if (!this.level().isClientSide()) {
-                BlockPos randomPos = result.getBlockPos();
-
-                BlockState state = this.level().getBlockState(randomPos);
-
-                if (!state.isAir() && state.getDestroySpeed(this.level(), randomPos) >= 0) {
-
-                    FallingBlockEntity fallingBlock = FallingBlockEntity.fall(this.level(), randomPos, state);
-
-                    fallingBlock.dropItem = false;
-
-                    this.level().removeBlock(randomPos, false);
-
-                    fallingBlock.setDeltaMovement(0, 0.1, 0);
-                    this.level().addFreshEntity(fallingBlock);
-            }
+            BlockPos pos = result.getBlockPos();
+            if (!tryTurningBlockInBlockEntity(pos))
+                this.setDeltaMovement(Vec3.ZERO);
+            super.onHitBlock(result);
         }
-        super.onHitBlock(result);
+    }
+
+    protected boolean tryTurningBlockInBlockEntity(BlockPos pos) {
+        float resistanceThreshold = 600.0F;
+        BlockState state = this.level().getBlockState(pos);
+
+        float blockResistance = state.getBlock().getExplosionResistance();
+
+        if (!state.isAir() && state.getDestroySpeed(this.level(), pos) >= 0 && blockResistance < resistanceThreshold) {
+
+            FallingBlockEntity fallingBlock = FallingBlockEntity.fall(this.level(), pos, state);
+
+            fallingBlock.dropItem = false;
+
+            this.level().removeBlock(pos, false);
+
+            fallingBlock.setDeltaMovement(0, 0.1, 0);
+            this.level().addFreshEntity(fallingBlock);
+            return true;
+        }
+        return false;
     }
 }

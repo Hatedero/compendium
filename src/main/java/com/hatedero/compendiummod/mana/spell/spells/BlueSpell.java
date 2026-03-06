@@ -18,8 +18,8 @@ import net.minecraft.world.phys.*;
 import static com.hatedero.compendiummod.entity.ModEntities.ENTITIES;
 
 public class BlueSpell extends Spell {
-    public BlueSpell(String name, float costPerTick) {
-        super(name, costPerTick);
+    public BlueSpell(float costPerTick) {
+        super(costPerTick);
     }
 
     @Override

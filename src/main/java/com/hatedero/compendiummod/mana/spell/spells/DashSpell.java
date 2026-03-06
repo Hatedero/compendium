@@ -18,8 +18,8 @@ import net.minecraft.world.phys.*;
 import static com.hatedero.compendiummod.mana.ModAttachments.*;
 
 public class DashSpell extends Spell {
-    public DashSpell(String name, float costPerTick) {
-        super(name, costPerTick);
+    public DashSpell(float costPerTick) {
+        super(costPerTick);
     }
 
     @Override

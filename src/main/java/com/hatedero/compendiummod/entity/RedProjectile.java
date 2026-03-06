@@ -1,5 +1,6 @@
 package com.hatedero.compendiummod.entity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
@@ -7,9 +8,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class RedProjectile extends AbstractHurtingProjectile {
         super.tick();
 
         Vec3 movement = this.getDeltaMovement();
-        double speedLimit = 0.5D;
+        double speedLimit = 0.7D;
 
         if (movement.length() > speedLimit) {
             this.setDeltaMovement(movement.normalize().scale(speedLimit));
@@ -76,10 +77,31 @@ public class RedProjectile extends AbstractHurtingProjectile {
     protected void onHitEntity(EntityHitResult result) {
         if(!level().isClientSide()) {
             Entity entity = result.getEntity();
-            if (entity instanceof LivingEntity le)
-                le.knockback(this.age%20, getRandomX(1), getRandomY());
+            if (entity instanceof LivingEntity le) {
+                le.knockback(this.age%20/2.0, getRandomX(1), getRandomY());
+                le.hurt(level().damageSources().inWall(), 1);
+            }
         }
 
         super.onHitEntity(result);
+    }
+
+    @Override
+    protected void onHitBlock(BlockHitResult result) {
+        if (!this.level().isClientSide) {
+            BlockPos pos = result.getBlockPos();
+            BlockState state = this.level().getBlockState(pos);
+
+            float resistanceThreshold = 600.0F;
+
+            float blockResistance = state.getBlock().getExplosionResistance();
+
+            if (blockResistance >= resistanceThreshold) {
+                this.setDeltaMovement(Vec3.ZERO);
+
+                this.level().levelEvent(2001, pos, Block.getId(state));
+            }
+        }
+        super.onHitBlock(result);
     }
 }

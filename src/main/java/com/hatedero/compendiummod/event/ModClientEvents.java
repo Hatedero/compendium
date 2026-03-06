@@ -6,6 +6,7 @@ import com.hatedero.compendiummod.item.ModItems;
 import com.hatedero.compendiummod.mana.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.Spell;
+import com.hatedero.compendiummod.mana.spell.SpellRegistry;
 import com.hatedero.compendiummod.util.KeyInputHandler;
 import com.hatedero.compendiummod.util.ModKeybinds;
 import com.ibm.icu.text.MessagePattern;
@@ -116,7 +117,7 @@ public class ModClientEvents {
 
         if (player.getData(IS_CHARGING) && spell != null) {
             int playerChargeTime = player.getData(CHARGE_TIME);
-            player.displayClientMessage(Component.literal("USING " + spell.getName() + " FOR - : " + playerChargeTime/20 + "s"), true);
+            player.displayClientMessage(Component.literal("USING ").append(Component.translatable(String.valueOf(SPELLS.getRegistry().get().getKey(spell)))).append(Component.literal(" FOR - : " + playerChargeTime/20 + "s")), true);
             spell.chargeTick(level, player, playerChargeTime);
         }
     }
@@ -172,6 +173,7 @@ public class ModClientEvents {
     public static void registerKeys(RegisterKeyMappingsEvent event) {
         event.register(ModKeybinds.SHOW_MANA_ACTION_KEY);
         event.register(ModKeybinds.CHARGE_SPELL_KEY);
+        event.register(ModKeybinds.OPEN_SPELL_MENU);
     }
 
     @SubscribeEvent

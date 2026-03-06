@@ -19,8 +19,8 @@ import static com.hatedero.compendiummod.mana.ModAttachments.CHARGE_TIME;
 import static com.hatedero.compendiummod.mana.ModAttachments.MANA;
 
 public class BlinkSpell extends Spell {
-    public BlinkSpell(String name, float costPerTick) {
-        super(name, costPerTick);
+    public BlinkSpell(float costPerTick) {
+        super(costPerTick);
     }
 
     @Override

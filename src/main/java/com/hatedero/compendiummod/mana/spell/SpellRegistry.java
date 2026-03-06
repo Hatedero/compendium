@@ -12,12 +12,16 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class SpellRegistry {
     public static final ResourceKey<Registry<Spell>> SPELL_REGISTRY_KEY =
-            ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "spells"));
+            ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "spell"));
 
     public static final DeferredRegister<Spell> SPELLS =
             DeferredRegister.create(SPELL_REGISTRY_KEY, CompendiumMod.MODID);
 
     public static final Registry<Spell> REGISTRY = SPELLS.makeRegistry(builder -> builder.sync(true));
+
+    public static ResourceLocation geTranslationKey(Spell spell) {
+        return spell == null ? ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "") : SpellRegistry.REGISTRY.getKey(spell);
+    }
 
     public static Spell getSpell(Level level, String id) {
         Registry<Spell> registry = level.registryAccess().registryOrThrow(SPELL_REGISTRY_KEY);
@@ -31,30 +35,30 @@ public class SpellRegistry {
         SPELLS.register(eventBus);
     }
 
-    /*public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
-            () -> new ReverseCursedTechniqueSpell("Reverse Cursed Technique", 5));
+    public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
+            () -> new ReverseCursedTechniqueSpell(5));
 
     public static final DeferredHolder<Spell, Spell> DISMANTLE = SPELLS.register("dismantle",
-            () -> new DismantleSpell("Dismantle", 3));*/
+            () -> new DismantleSpell(3));
 
     public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
-            () -> new DashSpell("Icarus Dash", 1));
+            () -> new DashSpell(1));
 
-    /*public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blink",
-            () -> new BlinkSpell("Blink", 1));
+    public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blink",
+            () -> new BlinkSpell(1));
 
     public static final DeferredHolder<Spell, Spell> GRAVITY_ZONE = SPELLS.register("gravity_zone",
-            () -> new GravityZoneSpell("Gravity zone", 1, 1, 10, false));
+            () -> new GravityZoneSpell(1, 1, 10, false));
 
     public static final DeferredHolder<Spell, Spell> ANTI_GRAVITY_ZONE = SPELLS.register("anti_gravity_zone",
-            () -> new GravityZoneSpell("Anti gravity zone", 1, -1, 10, true));*/
+            () -> new GravityZoneSpell(1, -1, 10, true));
 
     public static final DeferredHolder<Spell, Spell> INFINITY = SPELLS.register("infinity",
-            () -> new InfinitySpell("Infinity", 1, 5));
+            () -> new InfinitySpell(1, 5));
 
     public static final DeferredHolder<Spell, Spell> BLUE = SPELLS.register("blue",
-            () -> new BlueSpell("Blue", 5));
+            () -> new BlueSpell( 5));
 
     public static final DeferredHolder<Spell, Spell> RED = SPELLS.register("red",
-            () -> new RedSpell("Red", 5));
+            () -> new RedSpell(5));
 }

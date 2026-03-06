@@ -26,6 +26,15 @@
 
   "key.compendiummod.show_mana_action": "Show mana",
   "key.compendiummod.charge_spell": "Charge spell",
-  "key.compendiummod.open_spell_menu": "Open Spell Menu"
+  "key.compendiummod.open_spell_menu": "Open Spell Menu",
 
+  "spell.compendiummod.blue": "Blue",
+  "spell.compendiummod.red": "Red",
+  "spell.compendiummod.infinity": "Infinity",
+  "spell.compendiummod.dismantle": "Dismantle",
+  "spell.compendiummod.icarus_dash": "Icarus Dash",
+  "spell.compendiummod.blink": "Blink",
+  "spell.compendiummod.reverse_cursed_technique": "Reverse Cursed Technique",
+  "spell.compendiummod.gravity_zone": "Gravity Zone",
+  "spell.compendiummod.anti_gravity_zone": "Anti Gravity Zone"
 }

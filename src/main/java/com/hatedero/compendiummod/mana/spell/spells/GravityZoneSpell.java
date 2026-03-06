@@ -19,8 +19,8 @@ public class GravityZoneSpell extends Spell {
     float range;
     boolean includePlayer;
 
-    public GravityZoneSpell(String name, float costPerTick, float strength, float range, boolean includePlayer) {
-        super(name, costPerTick);
+    public GravityZoneSpell(float costPerTick, float strength, float range, boolean includePlayer) {
+        super(costPerTick);
         this.strength = strength;
         this.range = range;
         this.includePlayer = includePlayer;

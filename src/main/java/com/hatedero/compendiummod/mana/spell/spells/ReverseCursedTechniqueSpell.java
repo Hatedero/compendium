@@ -11,8 +11,8 @@ import net.minecraft.world.level.Level;
 import static com.hatedero.compendiummod.mana.ModAttachments.*;
 
 public class ReverseCursedTechniqueSpell extends Spell {
-    public ReverseCursedTechniqueSpell(String name, float costPerTick) {
-        super(name, costPerTick);
+    public ReverseCursedTechniqueSpell(float costPerTick) {
+        super(costPerTick);
     }
 
     @Override

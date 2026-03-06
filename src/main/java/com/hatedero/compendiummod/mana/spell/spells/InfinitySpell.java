@@ -20,8 +20,8 @@ import static com.hatedero.compendiummod.mana.ModAttachments.MANA;
 public class InfinitySpell extends Spell {
     float range;
 
-    public InfinitySpell(String name, float costPerTick, float range) {
-        super(name, costPerTick);
+    public InfinitySpell(float costPerTick, float range) {
+        super(costPerTick);
         this.range = range;
     }
 

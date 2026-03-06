@@ -12,8 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class RedSpell extends Spell {
-    public RedSpell(String name, float costPerTick) {
-        super(name, costPerTick);
+    public RedSpell(float costPerTick) {
+        super(costPerTick);
     }
 
     @Override
