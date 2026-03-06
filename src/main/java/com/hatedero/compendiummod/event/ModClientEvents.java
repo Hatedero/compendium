@@ -177,5 +177,6 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.BLUE_PROJECTILE.get(), NoopRenderer::new);
+        event.registerEntityRenderer(ModEntities.RED_PROJECTILE.get(), NoopRenderer::new);
     }
 }

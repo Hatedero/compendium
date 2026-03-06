@@ -31,27 +31,30 @@ public class SpellRegistry {
         SPELLS.register(eventBus);
     }
 
-    public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
+    /*public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
             () -> new ReverseCursedTechniqueSpell("Reverse Cursed Technique", 5));
 
     public static final DeferredHolder<Spell, Spell> DISMANTLE = SPELLS.register("dismantle",
-            () -> new DismantleSpell("Dismantle", 3));
+            () -> new DismantleSpell("Dismantle", 3));*/
 
     public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
             () -> new DashSpell("Icarus Dash", 1));
 
-    public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blink",
+    /*public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blink",
             () -> new BlinkSpell("Blink", 1));
 
     public static final DeferredHolder<Spell, Spell> GRAVITY_ZONE = SPELLS.register("gravity_zone",
             () -> new GravityZoneSpell("Gravity zone", 1, 1, 10, false));
 
     public static final DeferredHolder<Spell, Spell> ANTI_GRAVITY_ZONE = SPELLS.register("anti_gravity_zone",
-            () -> new GravityZoneSpell("Anti gravity zone", 1, -1, 10, true));
+            () -> new GravityZoneSpell("Anti gravity zone", 1, -1, 10, true));*/
 
     public static final DeferredHolder<Spell, Spell> INFINITY = SPELLS.register("infinity",
             () -> new InfinitySpell("Infinity", 1, 5));
 
     public static final DeferredHolder<Spell, Spell> BLUE = SPELLS.register("blue",
             () -> new BlueSpell("Blue", 5));
+
+    public static final DeferredHolder<Spell, Spell> RED = SPELLS.register("red",
+            () -> new RedSpell("Red", 5));
 }

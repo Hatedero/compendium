@@ -19,6 +19,13 @@ public class ModEntities {
                     .updateInterval(10)
                     .build("blue_projectile"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<RedProjectile>> RED_PROJECTILE =
+            ENTITIES.register("red_projectile", () -> EntityType.Builder.<RedProjectile>of(RedProjectile::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build("red_projectile"));
+
     public static void register(IEventBus eventBus) {
         ENTITIES.register(eventBus);
     }
