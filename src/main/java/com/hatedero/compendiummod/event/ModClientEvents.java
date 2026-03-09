@@ -1,36 +1,19 @@
 package com.hatedero.compendiummod.event;
 
 import com.hatedero.compendiummod.CompendiumMod;
-import com.hatedero.compendiummod.CompendiumModClient;
 import com.hatedero.compendiummod.entity.ModEntities;
-import com.hatedero.compendiummod.item.ModItems;
-import com.hatedero.compendiummod.mana.ManaHudOverlay;
+import com.hatedero.compendiummod.mana.GUI.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.Spell;
-import com.hatedero.compendiummod.mana.spell.SpellRegistry;
-import com.hatedero.compendiummod.util.KeyInputHandler;
 import com.hatedero.compendiummod.util.ModKeybinds;
-import com.ibm.icu.text.MessagePattern;
-import com.zigythebird.playeranim.animation.PlayerAnimationController;
-import com.zigythebird.playeranim.api.PlayerAnimationAccess;
-import com.zigythebird.playeranim.api.PlayerAnimationFactory;
-import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
-import com.zigythebird.playeranimcore.enums.PlayState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -39,18 +22,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.registries.datamaps.DataMapEntry;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import static com.hatedero.compendiummod.mana.ModAttachments.*;
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.SPELLS;
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.getSpell;
 import static com.hatedero.compendiummod.particles.ParticleUtils.drawParticleCircle;
-import static com.zigythebird.playeranim.PlayerAnimLibMod.ANIMATION_LAYER_ID;
 
 @EventBusSubscriber(modid = CompendiumMod.MODID, value = Dist.CLIENT)
 public class ModClientEvents {
@@ -137,35 +113,6 @@ public class ModClientEvents {
     }
 
     @SubscribeEvent
-    public static void onRenderGui(RenderGuiEvent.Post event) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null) return;
-
-        int cooldown = player.getData(CAST_COOLDOWN);
-        //float maxCooldown = getSpell(player.level(), player.getData(CURRENT_SPELL_ID)).getCooldown();
-
-        /*
-        NOT ACCURATE AS PLAYER CAN CHANGE SPELL WHILE IN COOLDOWN
-        But, doesn't matter since cooldown is gonna be on individual spell and not player cast
-        */
-        if (cooldown > 0) {
-            float progress = Math.min(1.0f, cooldown / 5*20f);
-
-            int barWidth = 50;
-            int barHeight = 4;
-            int x = (event.getGuiGraphics().guiWidth() - barWidth) / 2;
-            int y = 10;
-
-            event.getGuiGraphics().fill(x, y, x + barWidth, y + barHeight, 0xAA111111);
-
-            int currentProgressWidth = (int) (barWidth * progress);
-            event.getGuiGraphics().fill(x, y, x + currentProgressWidth, y + barHeight, 0xAAFFFFFF);
-
-            event.getGuiGraphics().renderOutline(x - 1, y - 1, barWidth + 2, barHeight + 2, 0xAAFFFFFF);
-        }
-    }
-
-    @SubscribeEvent
     public static void registerGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR,
                 ResourceLocation.fromNamespaceAndPath(CompendiumMod.MODID, "mana_overlay"),
@@ -177,6 +124,10 @@ public class ModClientEvents {
         event.register(ModKeybinds.SHOW_MANA_ACTION_KEY);
         event.register(ModKeybinds.CHARGE_SPELL_KEY);
         event.register(ModKeybinds.OPEN_SPELL_MENU);
+        event.register(ModKeybinds.ULTIMATE_KEY);
+        event.register(ModKeybinds.ABILITY_ONE_KEY);
+        event.register(ModKeybinds.ABILITY_TWO_KEY);
+        event.register(ModKeybinds.ABILITY_THREE_KEY);
     }
 
     @SubscribeEvent

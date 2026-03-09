@@ -31,4 +31,32 @@ public class ModKeybinds {
             GLFW.GLFW_KEY_H,
             KEY_CATEGORY
     );
+
+    public static final KeyMapping ULTIMATE_KEY = new KeyMapping(
+            "key."+CompendiumMod.MODID+".ultimate",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_R,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping ABILITY_ONE_KEY = new KeyMapping(
+            "key."+CompendiumMod.MODID+".ability_one",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_R,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping ABILITY_TWO_KEY = new KeyMapping(
+            "key."+CompendiumMod.MODID+".ability_two",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_R,
+            KEY_CATEGORY
+    );
+
+    public static final KeyMapping ABILITY_THREE_KEY = new KeyMapping(
+            "key."+CompendiumMod.MODID+".ability_three",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_R,
+            KEY_CATEGORY
+    );
 }

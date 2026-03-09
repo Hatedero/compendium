@@ -27,8 +27,14 @@
   "key.compendiummod.show_mana_action": "Show mana",
   "key.compendiummod.charge_spell": "Charge spell",
   "key.compendiummod.open_spell_menu": "Open Spell Menu",
+  "key.compendiummod.ultimate": "Ultimate",
+  "key.compendiummod.ability_one": "Ability 1",
+  "key.compendiummod.ability_two": "Ability 2",
+  "key.compendiummod.ability_three": "Ability 3",
+
 
   "spell.compendiummod.blue": "Blue",
+  "spell.compendiummod.handheld_blue": "Handheld Blue",
   "spell.compendiummod.red": "Red",
   "spell.compendiummod.infinity": "Infinity",
   "spell.compendiummod.dismantle": "Dismantle",

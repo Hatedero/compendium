@@ -57,6 +57,13 @@ public class ModAttachments {
                     .build()
     );
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> CHARGING_SPELL_ID = ATTACHMENT_TYPES.register(
+            "charging_spell_id", () -> AttachmentType.builder(() -> 0)
+                    .serialize(Codec.INT)
+                    .sync(new ChargingSpellIdSyncHandler())
+                    .build()
+    );
+
     public static void register(IEventBus eventBus) {
         ATTACHMENT_TYPES.register(eventBus);
     }

@@ -4,22 +4,15 @@ import com.hatedero.compendiummod.entity.BlueProjectile;
 import com.hatedero.compendiummod.entity.ModEntities;
 import com.hatedero.compendiummod.entity.ModEntityBehavior;
 import com.hatedero.compendiummod.mana.spell.Spell;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.Vec3;
 
-import static com.hatedero.compendiummod.entity.ModEntities.ENTITIES;
-
-public class BlueSpell extends Spell {
-    public BlueSpell(float costPerTick) {
+public class HandheldBlueSpell extends Spell {
+    public HandheldBlueSpell(float costPerTick) {
         super(costPerTick);
     }
 
@@ -49,7 +42,7 @@ public class BlueSpell extends Spell {
         if (!level.isClientSide() && livingEntity instanceof Player player && remainingUseDuration >= 60) {
             BlueProjectile projectile = new BlueProjectile(ModEntities.BLUE_PROJECTILE.get(), level, ModEntityBehavior.ENTITY_ATTACHED);
             projectile.setOwner(player);
-            projectile.setBehavior(ModEntityBehavior.THROWN);
+            projectile.setBehavior(ModEntityBehavior.ENTITY_ATTACHED);
             Vec3 eyePos = getPointInFront(livingEntity, 1);
             projectile.setPos(eyePos.x(), eyePos.y(), eyePos.z());
 

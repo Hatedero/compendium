@@ -1,11 +1,16 @@
-package com.hatedero.compendiummod.mana;
+package com.hatedero.compendiummod.mana.GUI;
 
+import com.hatedero.compendiummod.mana.ModAttachments;
+import com.hatedero.compendiummod.mana.ModAttributes;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.client.player.LocalPlayer;
 
 import java.text.DecimalFormat;
+
+import static com.hatedero.compendiummod.mana.ModAttachments.CAST_COOLDOWN;
 
 public class ManaHudOverlay implements LayeredDraw.Layer {
 
@@ -30,5 +35,28 @@ public class ManaHudOverlay implements LayeredDraw.Layer {
 
         guiGraphics.drawString(minecraft.font, text, x, y, 0xFFFFFF);
         guiGraphics.drawString(minecraft.font, secondText, x2, y-20, 0xFFFFFF);
+
+        int cooldown = player.getData(CAST_COOLDOWN);
+        //float maxCooldown = getSpell(player.level(), player.getData(CURRENT_SPELL_ID)).getCooldown();
+
+        /*
+        NOT ACCURATE AS PLAYER CAN CHANGE SPELL WHILE IN COOLDOWN
+        But, doesn't matter since cooldown is gonna be on individual spell and not player cast
+        */
+        if (cooldown > 0) {
+            float progress = Math.min(1.0f, cooldown / (5*20f));
+
+            int barWidth = 50;
+            int barHeight = 4;
+            x = (guiGraphics.guiWidth() - barWidth) / 2;
+            y = 10;
+
+            guiGraphics.fill(x, y, x + barWidth, y + barHeight, 0xAA111111);
+
+            int currentProgressWidth = (int) (barWidth * progress);
+            guiGraphics.fill(x, y, x + currentProgressWidth, y + barHeight, 0xAAFFFFFF);
+
+            guiGraphics.renderOutline(x - 1, y - 1, barWidth + 2, barHeight + 2, 0xAAFFFFFF);
+        }
     }
 }

@@ -28,7 +28,7 @@ import java.util.List;
 public class BlueProjectile extends AbstractHurtingProjectile {
     private int age = 0;
     private static final int MAX_LIFE = 100;
-    private double attractionForce = 0.75D;
+    private double attractionForce = 0.5D;
     private ModEntityBehavior behavior;
 
     public BlueProjectile(EntityType<? extends BlueProjectile> type, Level level, ModEntityBehavior behavior) {
@@ -50,18 +50,17 @@ public class BlueProjectile extends AbstractHurtingProjectile {
             }
         }
 
-        //super.tick();
-
         /*switch (behavior) {
-            case ModEntityBehavior.ENTITY_ATTACHED -> {*/
+            case ModEntityBehavior.ENTITY_ATTACHED -> {
                 if (!this.level().isClientSide()) {
                     Entity owner = getOwner();
                     if (owner instanceof Player player) {
-                        this.setPos(getPositionInLookDirection(player, 12));
+                        this.setPos(getPositionInLookDirection(player, 8));
                     }
                 }
-            /*}
-            case THROWN -> {
+            }
+            case THROWN -> {*/
+                super.tick();
                 Vec3 movement = this.getDeltaMovement();
                 double speedLimit = 0.5D;
 
@@ -70,40 +69,33 @@ public class BlueProjectile extends AbstractHurtingProjectile {
                         this.setDeltaMovement(movement.normalize().scale(speedLimit));
                     }
                 }
-            }
-        }*/
+            //}
+        //}
 
         if (!this.level().isClientSide()) {
 
-            double radius = 8;
+            double radius = 3D;
 
-            for (int x = 0; x < radius; x++) {
-                for (int y = 0; y< radius; y++) {
-                    for (int z = 0; z < radius; z++){
-                        BlockPos pos1 = this.blockPosition().offset(x,y,z);
-                        BlockPos pos2 = this.blockPosition().offset(-x,-y,-z);
-                        tryTurningBlockInBlockEntity(pos1);
-                        tryTurningBlockInBlockEntity(pos2);
-                    }
-                }
+            AABB area = this.getBoundingBox().inflate(radius);
+
+            for (BlockPos pos : BlockPos.betweenClosed(
+                    BlockPos.containing(area.minX, area.minY, area.minZ),
+                    BlockPos.containing(area.maxX, area.maxY, area.maxZ))) {
+                tryTurningBlockInBlockEntity(pos);
             }
-        }
 
-        double radius = 3.0D;
+            List<Entity> entities = this.level().getEntities(this, area);
 
-        AABB area = this.getBoundingBox().inflate(radius);
+            for (Entity target : entities) {
+                if (this.ownedBy(target))
+                    break;
 
-        List<Entity> entities = this.level().getEntities(this, area);
+                Vec3 pullVector = this.position().subtract(target.position()).normalize();
 
-        for (Entity target : entities) {
-            if (this.ownedBy(target))
-                break;
+                target.setDeltaMovement(target.getDeltaMovement().add(pullVector.scale(attractionForce)));
 
-            Vec3 pullVector = this.position().subtract(target.position()).normalize();
-
-            target.setDeltaMovement(target.getDeltaMovement().add(pullVector.scale(attractionForce)));
-
-            target.hasImpulse = true;
+                target.hasImpulse = true;
+            }
         }
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -117,6 +109,10 @@ public class BlueProjectile extends AbstractHurtingProjectile {
         Vec3 lookVec = player.getViewVector(1.0F);
 
         return eyePos.add(lookVec.scale(distance));
+    }
+
+    public void setBehavior(ModEntityBehavior behavior) {
+        this.behavior = behavior;
     }
 
     @Override
