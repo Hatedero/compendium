@@ -25,7 +25,7 @@ public class BootsItem extends ArmorItem {
         consumer.accept(new IClientItemExtensions() {
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-                var model = new MaskModel(Minecraft.getInstance().getEntityModels().bakeLayer(MyModelLayers.BOOTS_LAYER));
+                var model = new BootsModel(Minecraft.getInstance().getEntityModels().bakeLayer(MyModelLayers.BOOTS_LAYER));
 
                 model.leftLeg.visible = (armorSlot == EquipmentSlot.FEET);
                 model.rightLeg.visible = (armorSlot == EquipmentSlot.FEET);

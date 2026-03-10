@@ -8,14 +8,14 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.world.entity.LivingEntity;
 
 public class BootsModel extends HumanoidModel<LivingEntity> {
-    private static final CubeDeformation MASK_DEFORMATION = new CubeDeformation(0.03F);
+    private static final CubeDeformation BOOT_DEFORMATION = new CubeDeformation(0.04F);
 
     public BootsModel(ModelPart root) {
         super(root);
     }
 
     public static LayerDefinition createLayer() {
-        MeshDefinition mesh = HumanoidModel.createMesh(MASK_DEFORMATION, 0.0F);
+        MeshDefinition mesh = HumanoidModel.createMesh(BOOT_DEFORMATION, 0.0F);
         return LayerDefinition.create(mesh, 64, 32);
     }
 }

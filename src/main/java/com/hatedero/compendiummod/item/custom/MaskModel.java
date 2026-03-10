@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.world.entity.LivingEntity;
 
 public class MaskModel extends HumanoidModel<LivingEntity> {
-    private static final CubeDeformation MASK_DEFORMATION = new CubeDeformation(0.01F);
+    private static final CubeDeformation MASK_DEFORMATION = new CubeDeformation(0.02F);
 
     public MaskModel(ModelPart root) {
         super(root);

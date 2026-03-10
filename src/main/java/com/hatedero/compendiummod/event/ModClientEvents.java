@@ -2,6 +2,7 @@ package com.hatedero.compendiummod.event;
 
 import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.entity.ModEntities;
+import com.hatedero.compendiummod.item.custom.BootsModel;
 import com.hatedero.compendiummod.item.custom.MaskModel;
 import com.hatedero.compendiummod.mana.GUI.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.ModAttributes;
@@ -41,6 +42,7 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MyModelLayers.MASK_LAYER, MaskModel::createLayer);
+        event.registerLayerDefinition(MyModelLayers.BOOTS_LAYER, BootsModel::createLayer);
     }
 
     public static void handleShowMana(PlayerTickEvent.Post event) {
