@@ -19,6 +19,9 @@ import java.util.List;
 public class RedProjectile extends AbstractHurtingProjectile {
     private int age = 0;
     private static final int MAX_LIFE = 100;
+    private double repulsion_force = 4;
+    private double radius = 1D;
+
 
     public RedProjectile(EntityType<? extends RedProjectile> type, Level level) {
         super(type, level);
@@ -26,22 +29,49 @@ public class RedProjectile extends AbstractHurtingProjectile {
 
     @Override
     public void tick() {
-        this.age++;
+        if (!this.level().isClientSide()) {
 
-        if (this.age >= MAX_LIFE) {
-            if (!this.level().isClientSide) {
+            this.age++;
+
+            if (this.age >= MAX_LIFE) {
                 this.discard();
             }
+
+            super.tick();
+
+            Vec3 movement = this.getDeltaMovement();
+            double speedLimit = 0.7D;
+
+            if (movement.length() > speedLimit) {
+                this.setDeltaMovement(movement.normalize().scale(speedLimit));
+            }
+
+            AABB area = this.getBoundingBox().inflate(radius);
+
+            for (BlockPos pos : BlockPos.betweenClosed(
+                    BlockPos.containing(area.minX, area.minY, area.minZ),
+                    BlockPos.containing(area.maxX, area.maxY, area.maxZ))) {
+                if(random.nextBoolean())
+                    tryDestroyBlock(pos);
+            }
+
+            List<Entity> entities = this.level().getEntities(this, area);
+
+            for (Entity target : entities) {
+                if (this.ownedBy(target))
+                    break;
+
+                Vec3 pullVector = this.position().subtract(target.position()).normalize();
+
+                target.setDeltaMovement(target.getDeltaMovement().add(pullVector.scale(-repulsion_force)));
+
+                target.hasImpulse = true;
+            }
         }
+    }
 
-        super.tick();
+    public void tryDestroyBlock(BlockPos pos) {
 
-        Vec3 movement = this.getDeltaMovement();
-        double speedLimit = 0.7D;
-
-        if (movement.length() > speedLimit) {
-            this.setDeltaMovement(movement.normalize().scale(speedLimit));
-        }
     }
 
     @Override
