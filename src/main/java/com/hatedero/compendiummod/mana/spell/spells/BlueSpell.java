@@ -50,7 +50,7 @@ public class BlueSpell extends Spell {
     @Override
     public void release(Level level, LivingEntity livingEntity, int remainingUseDuration) {
         if (!level.isClientSide() && livingEntity instanceof Player player && remainingUseDuration >= 60) {
-            BlueProjectile projectile = new BlueProjectile(ModEntities.BLUE_PROJECTILE.get(), level, behavior);
+            BlueProjectile projectile = new BlueProjectile(ModEntities.BLUE_PROJECTILE.get(), level, behavior, 0.5D + 0.25 * ((double) remainingUseDuration /(remainingUseDuration+20*2)), 1D, remainingUseDuration + 20 * 2);
             projectile.setOwner(player);
             Vec3 eyePos = getPointInFront(livingEntity, 1);
             projectile.setPos(eyePos.x(), eyePos.y(), eyePos.z());

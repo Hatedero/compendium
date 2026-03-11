@@ -27,14 +27,17 @@ import java.util.List;
 
 public class BlueProjectile extends AbstractHurtingProjectile {
     private int age = 0;
-    private static final int MAX_LIFE = 100;
-    private double attractionForce = 0.5D;
-    private double radius = 1D;
+    private int maxLife;
+    private double attractionForce;
+    private double radius;
     private ModEntityBehavior behavior;
 
-    public BlueProjectile(EntityType<? extends BlueProjectile> type, Level level, ModEntityBehavior behavior) {
+    public BlueProjectile(EntityType<? extends BlueProjectile> type, Level level, ModEntityBehavior behavior, double attractionForce, double radius, int maxLife) {
         super(type, level);
         this.behavior = behavior;
+        this.attractionForce = attractionForce;
+        this.radius = radius;
+        this.maxLife = maxLife;
     }
 
     public BlueProjectile(EntityType<BlueProjectile> type, Level level) {
@@ -45,7 +48,7 @@ public class BlueProjectile extends AbstractHurtingProjectile {
     public void tick() {
         this.age++;
 
-        if (this.age >= MAX_LIFE) {
+        if (this.age >= maxLife) {
             if (!this.level().isClientSide) {
                 this.discard();
             }
@@ -99,7 +102,7 @@ public class BlueProjectile extends AbstractHurtingProjectile {
             }
         }
         if (this.level().isClientSide) {
-            this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.GLOW, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
         }
     }
