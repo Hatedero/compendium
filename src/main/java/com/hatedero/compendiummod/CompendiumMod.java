@@ -36,6 +36,7 @@ public class CompendiumMod {
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+
         ModBlocks.register(modEventBus);
 
         ModEntities.register(modEventBus);

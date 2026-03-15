@@ -51,7 +51,6 @@ public class ModClientEvents {
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
             int playerChargeTime = player.getData(CHARGE_TIME);
             player.displayClientMessage(Component.literal("USING ").append(Component.translatable(translationKey)).append(Component.literal(" FOR - : " + playerChargeTime/20 + "s")), true);
-            spell.chargeTick(level, player, playerChargeTime);
         }
     }
 

@@ -3,11 +3,14 @@ package com.hatedero.compendiummod.mana.spell.spells;
 import com.hatedero.compendiummod.entity.BlueProjectile;
 import com.hatedero.compendiummod.entity.ModEntities;
 import com.hatedero.compendiummod.entity.ModEntityBehavior;
+import com.hatedero.compendiummod.mana.ModAttachments;
+import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.Spell;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +36,7 @@ public class BlueSpell extends Spell {
 
     @Override
     public void chargeTick(Level level, LivingEntity livingEntity, int remainingUseDuration) {
-        if (level instanceof ServerLevel serverLevel) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             Vec3 eyePos = getPointInFront(livingEntity, 1);
 
             serverLevel.sendParticles(

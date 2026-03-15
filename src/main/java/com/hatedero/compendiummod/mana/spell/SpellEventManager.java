@@ -19,7 +19,7 @@ public class SpellEventManager {
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
+        if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
             handleSpellCharging(player);
         }
     }

@@ -40,7 +40,6 @@ public class RepairItemSpell extends Spell {
     @Override
     public void chargeTick(Level level, LivingEntity livingEntity, int remainingUseDuration) {
         if (level instanceof ServerLevel && livingEntity instanceof Player player && player.tickCount%20 == 0) {
-            player.sendSystemMessage(Component.literal("FIRING REPAIR CHECK ONCE"));
             if (canUseMana(livingEntity) && player.getItemInHand(InteractionHand.MAIN_HAND).isDamaged()) {
                 double cost = (costPerTick * (player.getAttributeValue(ModAttributes.MANA_OUTPUT) * (player.getAttributeValue(ModAttributes.MANA_OUTPUT)))) / 20;
                 player.setData(MANA, player.getData(MANA) - cost);
@@ -48,7 +47,6 @@ public class RepairItemSpell extends Spell {
                 int repairAmount = (int) (1 + (item.getMaxDamage()*0.005));
                 int currentDamage = item.getDamageValue();
                 int newDamage = Math.max(0, currentDamage - repairAmount);
-                player.sendSystemMessage(Component.literal("REPAIRING FOR : " + repairAmount));
                 item.setDamageValue(newDamage);
             }
             else {
