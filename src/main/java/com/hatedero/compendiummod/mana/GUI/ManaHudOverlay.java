@@ -46,7 +46,7 @@ public class ManaHudOverlay implements LayeredDraw.Layer {
 
         /*
         NOT ACCURATE AS PLAYER CAN CHANGE SPELL WHILE IN COOLDOWN
-        But, doesn't matter since cooldown is gonna be on individual spell and not player cast
+        But, doesn't matter since cooldown is gonna be on individual slots and not player cast
         */
         if (cooldown > 0) {
             float progress = Math.min(1.0f, cooldown / (5*20f));
@@ -77,7 +77,7 @@ public class ManaHudOverlay implements LayeredDraw.Layer {
             String slotName = Component.translatable("slot." + CompendiumMod.MODID + "." + slot.slotName()).getString();
             String spellName = Component.translatable("spell." + CompendiumMod.MODID + "." + slot.spellId()).getString();
 
-            text = String.format("%s : %s | %dt", slotName, spellName, slot.cooldown());
+            text = String.format("%s : %s | %d", slotName, spellName, slot.cooldown());
 
             guiGraphics.drawString(minecraft.font, text, x, y, 0xFFFFFF);
 

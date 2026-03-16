@@ -1,14 +1,18 @@
 package com.hatedero.compendiummod.mana.GUI;
 
+import com.hatedero.compendiummod.mana.ModAttachments;
 import com.hatedero.compendiummod.mana.spell.Spell;
 import com.hatedero.compendiummod.mana.spell.SpellRegistry;
+import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.network.CurrentSpellId.CurrentSpellIdUpdatePayload;
+import com.hatedero.compendiummod.network.SpellData.SpellDataUpdatePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.SPELLS;
 
@@ -18,7 +22,7 @@ public class SpellList extends ObjectSelectionList<SpellList.MySpellEntry> {
     }
 
     @Override
-    public int addEntry(MySpellEntry entry) {
+    public int addEntry(@NotNull MySpellEntry entry) {
         return super.addEntry(entry);
     }
 
@@ -46,6 +50,7 @@ public class SpellList extends ObjectSelectionList<SpellList.MySpellEntry> {
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             PacketDistributor.sendToServer(new CurrentSpellIdUpdatePayload(SpellRegistry.REGISTRY.getKey(spell).getPath()));
+            assert Minecraft.getInstance().player != null;
             return super.mouseClicked(mouseX, mouseY, button);
         }
 

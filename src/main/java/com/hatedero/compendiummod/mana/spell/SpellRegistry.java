@@ -32,6 +32,14 @@ public class SpellRegistry {
         SPELLS.register(eventBus);
     }
 
+    public static final DeferredHolder<Spell, Spell> EMPTY = SPELLS.register("empty",
+            () -> new EmptySpell(0) {
+                @Override
+                public int getUseDuration() {
+                    return 0;
+                }
+            });
+
     public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
             () -> new ReverseCursedTechniqueSpell(5));
 

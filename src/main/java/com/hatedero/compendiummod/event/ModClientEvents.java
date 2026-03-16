@@ -7,6 +7,8 @@ import com.hatedero.compendiummod.item.custom.MaskModel;
 import com.hatedero.compendiummod.item.custom.MyModelLayers;
 import com.hatedero.compendiummod.mana.GUI.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.spell.Spell;
+import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
+import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotData;
 import com.hatedero.compendiummod.util.ModKeybinds;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.NoopRenderer;
@@ -44,13 +46,18 @@ public class ModClientEvents {
 
         Level level = player.level();
 
-        Spell spell = getSpell(level, player.getData(CURRENT_SPELL_ID));
+        PlayerSpellData data = player.getData(SPELL_DATA);
 
+        if(!data.chargingSlotName().isEmpty()) {
+            SpellSlotData slot = data.slots().stream()
+                    .filter(s -> s.slotName().equals(data.chargingSlotName()))
+                    .findFirst()
+                    .orElse(null);
+            assert slot != null;
+            Spell spell = getSpell(level, slot.spellId());
 
-        if (player.getData(IS_CHARGING) && spell != null) {
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
-            int playerChargeTime = player.getData(CHARGE_TIME);
-            player.displayClientMessage(Component.literal("USING ").append(Component.translatable(translationKey)).append(Component.literal(" FOR - : " + playerChargeTime/20 + "s")), true);
+            player.displayClientMessage(Component.literal("CHARGED ").append(Component.translatable(translationKey)).append(Component.literal(" WITH : " + slot.chargeLevel() )), true);
         }
     }
 
@@ -80,11 +87,11 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(ModKeybinds.CHARGE_SPELL_KEY);
+        //event.register(ModKeybinds.CHARGE_SPELL_KEY);
         event.register(ModKeybinds.OPEN_SPELL_MENU);
         event.register(ModKeybinds.ULTIMATE_KEY);
-        /*event.register(ModKeybinds.ABILITY_ONE_KEY);
+        event.register(ModKeybinds.ABILITY_ONE_KEY);
         event.register(ModKeybinds.ABILITY_TWO_KEY);
-        event.register(ModKeybinds.ABILITY_THREE_KEY);*/
+        event.register(ModKeybinds.ABILITY_THREE_KEY);
     }
 }

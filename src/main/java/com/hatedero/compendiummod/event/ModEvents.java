@@ -54,7 +54,7 @@ public class ModEvents {
                         0
                 ));
 
-                player.setData(ModAttachments.SPELL_DATA, new PlayerSpellData(List.copyOf(updatedSlots)));
+                player.setData(ModAttachments.SPELL_DATA, new PlayerSpellData(List.copyOf(updatedSlots), slot));
 
                 player.sendSystemMessage(Component.literal( "Added " + slot + " spell slot to " + player.getName().getString()));
             }
