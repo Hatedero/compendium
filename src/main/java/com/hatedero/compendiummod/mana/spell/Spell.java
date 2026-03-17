@@ -1,6 +1,7 @@
 package com.hatedero.compendiummod.mana.spell;
 
 import com.hatedero.compendiummod.mana.ModAttributes;
+import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotDataHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -30,10 +31,8 @@ public abstract class Spell{
     }
 
     public void release (Level level, LivingEntity livingEntity, int remainingUseDuration) {
-        if (!level.isClientSide()) {
-            livingEntity.setData(CAST_COOLDOWN, getCooldown());
-            livingEntity.setData(IS_CHARGING, false);
-            livingEntity.setData(CHARGE_TIME, 0);
+        if (!level.isClientSide() && livingEntity instanceof Player player) {
+            livingEntity.setData(SPELL_DATA, SpellSlotDataHelper.cooldownHandler(player, 0));
         }
     }
 
