@@ -4,6 +4,7 @@ import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.mana.GUI.SpellScreen;
 import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.network.SpellData.SpellDataUpdatePayload;
+import com.hatedero.compendiummod.network.SpellDataActiveSLot.SpellDataActiveSlotUpdatePayload;
 import com.hatedero.compendiummod.network.isCharging.IsChargingUpdatePayload;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
@@ -19,6 +20,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.hatedero.compendiummod.mana.ModAttachments.SPELL_DATA;
@@ -30,56 +32,48 @@ public class KeyInputHandler {
         if (Minecraft.getInstance().screen != null)
             return;
         if (event.getAction() == GLFW.GLFW_PRESS) {
-            AtomicReference<String> pressedSlot = new AtomicReference<>();
+            String slotToPacket = null;
 
-            Map<KeyMapping, String> keys =
-                    Map.ofEntries(Map.entry(ModKeybinds.ULTIMATE_KEY, "ultimate"),
-                            Map.entry(ModKeybinds.ABILITY_ONE_KEY, "ability_1"),
-                            Map.entry(ModKeybinds.ABILITY_TWO_KEY, "ability_2"),
-                            Map.entry(ModKeybinds.ABILITY_THREE_KEY, "ability_3"));
-
-            keys.forEach((k, v) -> {
-                if (k.consumeClick())
-                    pressedSlot.set(v);
-            });
-
-            if (pressedSlot.get() != null) {
-                Player player =  Minecraft.getInstance().player;
-                PacketDistributor.sendToServer(new SpellDataUpdatePayload(new PlayerSpellData(player.getData(SPELL_DATA).slots(), pressedSlot.get())));
+            if (ModKeybinds.ULTIMATE_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ultimate";
+            } else if (ModKeybinds.ABILITY_ONE_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ability_1";
+            } else if (ModKeybinds.ABILITY_TWO_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ability_2";
+            } else if (ModKeybinds.ABILITY_THREE_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ability_3";
             }
 
-            /*if (ModKeybinds.CHARGE_SPELL_KEY.isActiveAndMatches(InputConstants.getKey(event.getKey(), event.getScanCode()))) {
-                LocalPlayer player = Minecraft.getInstance().player;
+            if (slotToPacket != null) {
+                Player player = Minecraft.getInstance().player;
                 if (player != null) {
-                    PacketDistributor.sendToServer(new IsChargingUpdatePayload(true));
+                    PacketDistributor.sendToServer(new SpellDataActiveSlotUpdatePayload(slotToPacket));
                 }
-            } else */if (ModKeybinds.OPEN_SPELL_MENU.isActiveAndMatches(InputConstants.getKey(event.getKey(), event.getScanCode()))) {
+            }
+
+            if (ModKeybinds.OPEN_SPELL_MENU.isActiveAndMatches(InputConstants.getKey(event.getKey(), event.getScanCode()))) {
                 Minecraft.getInstance().setScreen(new SpellScreen(Component.literal("Spell List")));
             }
         } else if (event.getAction() == GLFW.GLFW_RELEASE) {
-            AtomicReference<String> pressedSlot = new AtomicReference<>();
+            String slotToPacket = null;
 
-            Map<KeyMapping, String> keys =
-                    Map.ofEntries(Map.entry(ModKeybinds.ULTIMATE_KEY, "ultimate"),
-                            Map.entry(ModKeybinds.ABILITY_ONE_KEY, "ability_1"),
-                            Map.entry(ModKeybinds.ABILITY_TWO_KEY, "ability_2"),
-                            Map.entry(ModKeybinds.ABILITY_THREE_KEY, "ability_3"));
-
-            keys.forEach((k, v) -> {
-                if (k.consumeClick())
-                    pressedSlot.set(v);
-            });
-
-            if (pressedSlot.get() != null) {
-                Player player =  Minecraft.getInstance().player;
-                PacketDistributor.sendToServer(new SpellDataUpdatePayload(new PlayerSpellData(player.getData(SPELL_DATA).slots(), "")));
+            if (ModKeybinds.ULTIMATE_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ultimate";
+            } else if (ModKeybinds.ABILITY_ONE_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ability_1";
+            } else if (ModKeybinds.ABILITY_TWO_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ability_2";
+            } else if (ModKeybinds.ABILITY_THREE_KEY.matches(event.getKey(), event.getScanCode())) {
+                slotToPacket = "ability_3";
             }
-            /*if (ModKeybinds.CHARGE_SPELL_KEY.isActiveAndMatches(InputConstants.getKey(event.getKey(), event.getScanCode()))) {
-                LocalPlayer player = Minecraft.getInstance().player;
-                if (player != null) {
-                    PacketDistributor.sendToServer(new IsChargingUpdatePayload(false));
+
+            if (slotToPacket != null) {
+                assert Minecraft.getInstance().player != null;
+                Player player = Minecraft.getInstance().player;
+                if (Objects.equals(player.getData(SPELL_DATA).chargingSlotName(), slotToPacket)) {
+                    PacketDistributor.sendToServer(new SpellDataActiveSlotUpdatePayload(""));
                 }
-            }*/
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import com.hatedero.compendiummod.item.custom.MaskModel;
 import com.hatedero.compendiummod.item.custom.MyModelLayers;
 import com.hatedero.compendiummod.mana.GUI.ManaHudOverlay;
 import com.hatedero.compendiummod.mana.spell.Spell;
+import com.hatedero.compendiummod.mana.spell.spells.EmptySpell;
 import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotData;
 import com.hatedero.compendiummod.util.ModKeybinds;
@@ -55,6 +56,8 @@ public class ModClientEvents {
                     .orElse(null);
             assert slot != null;
             Spell spell = getSpell(level, slot.spellId());
+
+            if (spell == null || spell instanceof EmptySpell) return;
 
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
             player.displayClientMessage(Component.literal("CHARGED ").append(Component.translatable(translationKey)).append(Component.literal(" WITH : " + slot.chargeLevel() )), true);
