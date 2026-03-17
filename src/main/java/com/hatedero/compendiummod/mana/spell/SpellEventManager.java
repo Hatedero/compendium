@@ -29,11 +29,38 @@ public class SpellEventManager {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
             handleSpellCharging(player);
+            handleCooldowns(player);
         }
+    }
+
+    private static void handleCooldowns(ServerPlayer player) {
+        Level level = player.level();
+
+        if (level.isClientSide()) return;
+
+        PlayerSpellData data = player.getData(SPELL_DATA);
+
+        PlayerSpellData newData = data;
+
+        List<SpellSlotData> updatedSlots = data.slots().stream().map(s -> {
+                if (!Objects.equals(s.slotName(), data.chargingSlotName()) && s.cooldown() > 0) {
+                    return new SpellSlotData(
+                            s.slotName(),
+                            s.spellId(),
+                            s.chargeLevel(),
+                            s.cooldown() - 1
+                    );
+                }
+                return s;
+            }).toList();
+        newData = new PlayerSpellData(updatedSlots, data.chargingSlotName());
+        player.setData(SPELL_DATA, newData);
     }
 
     private static void handleSpellCharging(ServerPlayer player) {
         Level level = player.level();
+
+        if (level.isClientSide()) return;
 
         PlayerSpellData data = player.getData(SPELL_DATA);
 
@@ -52,7 +79,7 @@ public class SpellEventManager {
         int chargeLevel = (int) (slot.chargeLevel() + (player.getAttributeValue(ModAttributes.MANA_OUTPUT) * player.getAttributeValue(ModAttributes.MANA_EFFICIENCY) * player.getAttributeValue(ModAttributes.CASTING_SPEED)));
 
         if (spell == null || spell instanceof EmptySpell) {
-            return;
+            player.setData(SPELL_DATA, newData);
         } else {
             List<SpellSlotData> updatedSlots = data.slots().stream().map(s -> {
                 if (Objects.equals(s.slotName(), data.chargingSlotName())) {
@@ -66,8 +93,8 @@ public class SpellEventManager {
                 return s;
             }).toList();
             newData = new PlayerSpellData(updatedSlots, data.chargingSlotName());
+            player.setData(SPELL_DATA, newData);
             spell.chargeTick(level, player, chargeLevel);
         }
-        player.setData(SPELL_DATA, newData);
     }
 }

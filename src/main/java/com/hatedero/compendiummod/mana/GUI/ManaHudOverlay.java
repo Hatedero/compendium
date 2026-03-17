@@ -77,7 +77,7 @@ public class ManaHudOverlay implements LayeredDraw.Layer {
             String slotName = Component.translatable("slot." + CompendiumMod.MODID + "." + slot.slotName()).getString();
             String spellName = Component.translatable("spell." + CompendiumMod.MODID + "." + slot.spellId()).getString();
 
-            text = String.format("%s : %s | %d", slotName, spellName, slot.cooldown());
+            text = String.format("%s : %s | %d | %d", slotName, spellName, slot.cooldown(), slot.chargeLevel());
 
             guiGraphics.drawString(minecraft.font, text, x, y, 0xFFFFFF);
 

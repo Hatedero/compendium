@@ -18,11 +18,9 @@ public class DebugSpell extends Spell {
 
     @Override
     public void chargeEffect(Level level, Player player, int manaLevel) {
-        player.sendSystemMessage(Component.literal("CHARGE AT : " + manaLevel));
     }
 
     @Override
     public void releaseEffect(Level level, Player player, int manaLevel) {
-        player.sendSystemMessage(Component.literal("RELEASE AT : " + manaLevel));
     }
 }

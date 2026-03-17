@@ -45,7 +45,7 @@ public class SpellRegistry {
             });
 
     public static final DeferredHolder<Spell, Spell> DEBUG = SPELLS.register("debug",
-            () -> new DebugSpell(1, 200, 100));
+            () -> new DebugSpell(2, 200, 100));
 
     /*public static final DeferredHolder<Spell, Spell> REVERSE_CURSED_TECHNIQUE = SPELLS.register("reverse_cursed_technique",
             () -> new ReverseCursedTechniqueSpell(5));

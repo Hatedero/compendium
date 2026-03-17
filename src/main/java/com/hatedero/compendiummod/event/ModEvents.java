@@ -31,6 +31,14 @@ import static com.hatedero.compendiummod.mana.spell.SpellRegistry.getSpell;
 
 @EventBusSubscriber(modid = CompendiumMod.MODID)
 public class ModEvents {
+
+    /*@SubscribeEvent
+    public static void onPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide()) return;
+        player.setData(SPELL_DATA, new PlayerSpellData(player.getData(SPELL_DATA).slots(), player.getData(SPELL_DATA).slots().get(player.tickCount%4).slotName()));
+    }*/
+
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();

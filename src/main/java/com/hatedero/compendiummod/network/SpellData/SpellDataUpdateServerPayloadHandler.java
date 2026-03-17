@@ -14,21 +14,6 @@ import static com.hatedero.compendiummod.mana.ModAttachments.SPELL_DATA;
 
 public class SpellDataUpdateServerPayloadHandler {
     public static void handleDataOnMain(final SpellDataUpdatePayload data, final IPayloadContext context) {
-        Player player = context.player();
-        PlayerSpellData previousData = player.getData(SPELL_DATA);
-        PlayerSpellData newData = previousData;
-        List<SpellSlotData> updatedSlots = previousData.slots().stream().map(s -> {
-            if (Objects.equals(s.slotName(), previousData.chargingSlotName())) {
-                return new SpellSlotData(
-                        s.slotName(),
-                        s.spellId(),
-                        s.chargeLevel(),
-                        90
-                );
-            }
-            return s;
-        }).toList();
-        newData = new PlayerSpellData(updatedSlots, newData.chargingSlotName());
-        context.player().setData(SPELL_DATA, newData);
+        context.player().sendSystemMessage(Component.literal("CLIENT SHOULDN'T MODIFY SERVER DATA"));
     }
 }

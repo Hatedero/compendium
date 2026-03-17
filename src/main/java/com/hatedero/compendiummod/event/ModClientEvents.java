@@ -47,6 +47,8 @@ public class ModClientEvents {
 
         Level level = player.level();
 
+        if(level.isClientSide()) return;
+
         PlayerSpellData data = player.getData(SPELL_DATA);
 
         if(!data.chargingSlotName().isEmpty()) {
@@ -54,7 +56,10 @@ public class ModClientEvents {
                     .filter(s -> s.slotName().equals(data.chargingSlotName()))
                     .findFirst()
                     .orElse(null);
-            assert slot != null;
+            if (slot == null) {
+                player.displayClientMessage(Component.literal(player.getData(SPELL_DATA).chargingSlotName()), true);
+                return;
+            }
             Spell spell = getSpell(level, slot.spellId());
 
             if (spell == null || spell instanceof EmptySpell) return;

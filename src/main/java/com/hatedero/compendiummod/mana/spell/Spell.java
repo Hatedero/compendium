@@ -3,6 +3,7 @@ package com.hatedero.compendiummod.mana.spell;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotDataHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -47,7 +48,7 @@ public abstract class Spell{
     };
 
     public boolean canUseMana (Player player, int cost, int manaLevel) {
-        if (player.getData(MANA) - cost >= 0 && manaLevel <= maxManaCharge)
+        if (SpellSlotDataHelper.canUseMana(player) && manaLevel <= maxManaCharge)
             return true;
         return false;
     }
