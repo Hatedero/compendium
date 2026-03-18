@@ -62,6 +62,9 @@ public class SpellRegistry {
     public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blink",
             () -> new BlinkSpell(1, 200, 20, 15));
 
+    public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
+            () -> new DashSpell(1, 200, 20, 1.5));
+
     /*public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
             () -> new DashSpell(1));
 
