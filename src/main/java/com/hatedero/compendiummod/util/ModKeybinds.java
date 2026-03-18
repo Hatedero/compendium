@@ -11,13 +11,6 @@ import java.util.List;
 public class ModKeybinds {
     public static final String KEY_CATEGORY = "key.categories."+ CompendiumMod.MODID;
 
-    /*public static final KeyMapping CHARGE_SPELL_KEY = new KeyMapping(
-            "key."+CompendiumMod.MODID+".charge_spell",
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
-            KEY_CATEGORY
-    );*/
-
     public static final KeyMapping OPEN_SPELL_MENU = new KeyMapping(
             "key."+CompendiumMod.MODID+".open_spell_menu",
             InputConstants.Type.KEYSYM,
@@ -28,28 +21,28 @@ public class ModKeybinds {
     public static final KeyMapping ULTIMATE_KEY = new KeyMapping(
             "key."+CompendiumMod.MODID+".ultimate",
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
+            GLFW.GLFW_KEY_UP,
             KEY_CATEGORY
     );
 
     public static final KeyMapping ABILITY_ONE_KEY = new KeyMapping(
             "key."+CompendiumMod.MODID+".ability_1",
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
+            GLFW.GLFW_KEY_LEFT,
             KEY_CATEGORY
     );
 
     public static final KeyMapping ABILITY_TWO_KEY = new KeyMapping(
             "key."+CompendiumMod.MODID+".ability_2",
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
+            GLFW.GLFW_KEY_DOWN,
             KEY_CATEGORY
     );
 
     public static final KeyMapping ABILITY_THREE_KEY = new KeyMapping(
             "key."+CompendiumMod.MODID+".ability_3",
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
+            GLFW.GLFW_KEY_RIGHT,
             KEY_CATEGORY
     );
 }
