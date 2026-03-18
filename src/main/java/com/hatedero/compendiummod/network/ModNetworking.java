@@ -10,6 +10,9 @@ import com.hatedero.compendiummod.network.SpellData.SpellDataUpdateServerPayload
 import com.hatedero.compendiummod.network.SpellDataActiveSLot.SpellDataActiveSlotUpdateClientPayloadHandler;
 import com.hatedero.compendiummod.network.SpellDataActiveSLot.SpellDataActiveSlotUpdatePayload;
 import com.hatedero.compendiummod.network.SpellDataActiveSLot.SpellDataActiveSlotUpdateServerPayloadHandler;
+import com.hatedero.compendiummod.network.SpellDataSlotSpell.SpellDataSlotSpellUpdateClientPayloadHandler;
+import com.hatedero.compendiummod.network.SpellDataSlotSpell.SpellDataSlotSpellUpdatePayload;
+import com.hatedero.compendiummod.network.SpellDataSlotSpell.SpellDataSlotSpellUpdateServerPayloadHandler;
 import com.hatedero.compendiummod.network.isCharging.IsChargingUpdateClientPayloadHandler;
 import com.hatedero.compendiummod.network.isCharging.IsChargingUpdatePayload;
 import com.hatedero.compendiummod.network.isCharging.IsChargingUpdateServerPayloadHandler;
@@ -55,6 +58,14 @@ public class ModNetworking {
                 new DirectionalPayloadHandler<>(
                         SpellDataActiveSlotUpdateClientPayloadHandler::handleDataOnMain,
                         SpellDataActiveSlotUpdateServerPayloadHandler::handleDataOnMain
+                )
+        );
+        registrar.playBidirectional(
+                SpellDataSlotSpellUpdatePayload.TYPE,
+                SpellDataSlotSpellUpdatePayload.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        SpellDataSlotSpellUpdateClientPayloadHandler::handleDataOnMain,
+                        SpellDataSlotSpellUpdateServerPayloadHandler::handleDataOnMain
                 )
         );
     }
