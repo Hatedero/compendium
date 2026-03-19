@@ -16,8 +16,10 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -67,8 +69,24 @@ public class ModClientEvents {
 
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
             player.displayClientMessage(Component.literal("CHARGING ").append(Component.translatable(translationKey)).append(Component.literal(" : " + slot.chargeLevel())), true);
-            spell.chargeTick(level, player, 0, "");
+
+            if(player.tickCount % 10 == 0)
+                ParticleHelper.spawnBasicParticle(level, getPointInFront(player, 1));
+
         }
+    }
+
+    public static Vec3 getPointInFront(LivingEntity entity, double distance) {
+        Vec3 eyePos = entity.getEyePosition().add(0,-entity.getBbHeight() * 0.2,0);
+
+        Vec3 lookDir = entity.getLookAngle();
+
+        return eyePos.add(lookDir.scale(distance));
+    }
+
+    @SubscribeEvent
+    public static void onParticleFactoryRegistration(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(MyModParticles.CUSTOM_SPRITE.get(), LodestoneParticleSpawner.SpritePicker::new);
     }
 
     @SubscribeEvent

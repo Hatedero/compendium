@@ -7,6 +7,7 @@ import com.hatedero.compendiummod.item.ModItems;
 import com.hatedero.compendiummod.mana.ModAttachments;
 import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.SpellRegistry;
+import com.hatedero.compendiummod.particles.ModParticles;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
@@ -34,6 +35,8 @@ public class CompendiumMod {
         NeoForge.EVENT_BUS.register(this);
 
         ModCreativeModeTabs.register(modEventBus);
+
+        ModParticles.register(modEventBus);
 
         ModItems.register(modEventBus);
 

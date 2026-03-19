@@ -43,7 +43,6 @@ public class BlueSpell extends Spell {
             );
         } else if (level.isClientSide()){
             player.sendSystemMessage(Component.literal("SHOW ME"));
-            ParticleHelper.spawnBasicParticle(level, getPointInFront(player, 1));
         }
     }
 
