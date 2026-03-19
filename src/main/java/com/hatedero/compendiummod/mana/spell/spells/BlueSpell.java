@@ -4,6 +4,7 @@ import com.hatedero.compendiummod.entity.BlueProjectile;
 import com.hatedero.compendiummod.entity.ModEntities;
 import com.hatedero.compendiummod.entity.ModEntityBehavior;
 import com.hatedero.compendiummod.mana.spell.Spell;
+import com.hatedero.compendiummod.particles.ParticleHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -40,6 +41,8 @@ public class BlueSpell extends Spell {
                     0.05, 0.05, 0.05,
                     0.01
             );
+        } else if (level.isClientSide()){
+            ParticleHelper.spawnBasicParticle(level, getPointInFront(player, 1));
         }
     }
 

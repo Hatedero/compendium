@@ -21,6 +21,8 @@ public abstract class Spell{
     public void chargeTick(Level level, Player player, int manaLevel, String slotName) {
         if (!level.isClientSide) {
             int cost = (int) (player.getAttributeValue(ModAttributes.MANA_OUTPUT) * player.getAttributeValue(ModAttributes.MANA_EFFICIENCY) * player.getAttributeValue(ModAttributes.CASTING_SPEED));
+            if(manaLevel > this.maxManaCharge)
+                manaLevel = this.maxManaCharge;
             if (canUseMana(player, manaLevel)) {
                 player.setData(MANA, player.getData(MANA) - cost);
                 chargeEffect(level, player, manaLevel);

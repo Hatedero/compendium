@@ -10,6 +10,7 @@ import com.hatedero.compendiummod.mana.spell.Spell;
 import com.hatedero.compendiummod.mana.spell.spells.EmptySpell;
 import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotData;
+import com.hatedero.compendiummod.particles.ParticleHelper;
 import com.hatedero.compendiummod.util.ModKeybinds;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.NoopRenderer;
@@ -47,7 +48,7 @@ public class ModClientEvents {
 
         Level level = player.level();
 
-        if(level.isClientSide()) return;
+        if(!level.isClientSide()) return;
 
         PlayerSpellData data = player.getData(SPELL_DATA);
 
@@ -66,6 +67,7 @@ public class ModClientEvents {
 
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
             player.displayClientMessage(Component.literal("CHARGING ").append(Component.translatable(translationKey)).append(Component.literal(" : " + slot.chargeLevel())), true);
+            spell.chargeTick(level, player, 0, "");
         }
     }
 

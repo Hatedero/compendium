@@ -57,7 +57,7 @@ public class ModEvents {
             if (!hasSlot) {
                 updatedSlots.add(new SpellSlotData(
                         slot,
-                        "blue",
+                        "empty",
                         0,
                         0
                 ));

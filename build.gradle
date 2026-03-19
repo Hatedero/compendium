@@ -21,6 +21,14 @@ repositories {
     mavenCentral()
 
     maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+
+    maven {
+        url = "https://maven.blamejared.com/"
+    }
+
+    maven {
         name = "RedlanceMinecraft"
         url = "https://repo.redlance.org/public"
     }
@@ -128,6 +136,7 @@ configurations.configureEach {
 
 dependencies {
     implementation "com.zigythebird.playeranim:PlayerAnimationLibNeo:$pal_version"
+    implementation "team.lodestar.lodestone:lodestone:${lodestone_version}"
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"

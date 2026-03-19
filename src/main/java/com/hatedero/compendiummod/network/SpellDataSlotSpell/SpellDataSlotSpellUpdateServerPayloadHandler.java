@@ -33,6 +33,5 @@ public class SpellDataSlotSpellUpdateServerPayloadHandler {
                 oldData.chargeStartTime());
 
         context.player().setData(SPELL_DATA, newData);
-        context.player().sendSystemMessage(Component.literal("CHANGED SLOT : " + data.slot() + " SPELL TO " + data.spell()));
     }
 }
