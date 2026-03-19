@@ -65,36 +65,15 @@ public class SpellRegistry {
     public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
             () -> new DashSpell(1, 200, 20, 1.5));
 
-    /*public static final DeferredHolder<Spell, Spell> ICARUS_DASH = SPELLS.register("icarus_dash",
-            () -> new DashSpell(1));
-
-    public static final DeferredHolder<Spell, Spell> BLINK = SPELLS.register("blinsk",
-            () -> new BlinkSpell(1));
-
-    public static final DeferredHolder<Spell, Spell> GRAVITY_ZONE = SPELLS.register("gravity_zone",
-            () -> new GravityZoneSpell(1, 1, 5));
-
-    public static final DeferredHolder<Spell, Spell> ANTI_GRAVITY_ZONE = SPELLS.register("anti_gravity_zone",
-            () -> new GravityZoneSpell(1, -1, 5));
-
-    public static final DeferredHolder<Spell, Spell> BLUE = SPELLS.register("blue",
-            () -> new BlueSpell( 5, ModEntityBehavior.THROWN));
-
-    public static final DeferredHolder<Spell, Spell> HANDHELD_BLUE = SPELLS.register("handheld_blue",
-            () -> new BlueSpell( 5, ModEntityBehavior.ENTITY_ATTACHED));
-
-    public static final DeferredHolder<Spell, Spell> RED = SPELLS.register("red",
-            () -> new RedSpell(5));
-
-    public static final DeferredHolder<Spell, Spell> WALLRUN = SPELLS.register("wallrun",
-            () -> new WallRunSpell(1));
-
     public static final DeferredHolder<Spell, Spell> MANA_BOLT = SPELLS.register("mana_bolt",
-            () -> new ManaBoltSpell(10));
+            () -> new ManaBoltSpell(1, 200, 20));
 
     public static final DeferredHolder<Spell, Spell> REFLECT_BARRIER = SPELLS.register("reflect_barrier",
-            () -> new ReflectBarrierSpell(10, 3));
+            () -> new ReflectBarrierSpell(1, 200, 20, 3));
+
+    public static final DeferredHolder<Spell, Spell> RED = SPELLS.register("red",
+            () -> new RedSpell(1, 200, 20));
 
     public static final DeferredHolder<Spell, Spell> REPAIR_ITEM = SPELLS.register("repair_item",
-            () -> new RepairItemSpell(50));*/
+            () -> new RepairItemSpell(1, 200, 20, 0.005f));
 }
