@@ -10,7 +10,7 @@ import net.neoforged.neoforge.event.ServerChatEvent;
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.getSpell;
 
 @EventBusSubscriber(modid = CompendiumMod.MODID)
-public class IncantationEvenHandler {
+    public class IncantationEvenHandler {
     @SubscribeEvent
     public static void onPlayerChat(ServerChatEvent event) {
         var player = event.getPlayer();

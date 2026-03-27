@@ -2,6 +2,7 @@ package com.hatedero.compendiummod.event;
 
 import com.hatedero.compendiummod.CompendiumMod;
 import com.hatedero.compendiummod.entity.ModEntities;
+import com.hatedero.compendiummod.entity.renderer.FlatSpriteRenderer;
 import com.hatedero.compendiummod.item.custom.BootsModel;
 import com.hatedero.compendiummod.item.custom.MaskModel;
 import com.hatedero.compendiummod.item.custom.MyModelLayers;
@@ -10,11 +11,14 @@ import com.hatedero.compendiummod.mana.spell.Spell;
 import com.hatedero.compendiummod.mana.spell.spells.EmptySpell;
 import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotData;
+import com.hatedero.compendiummod.particles.ModParticles;
 import com.hatedero.compendiummod.particles.ParticleHelper;
 import com.hatedero.compendiummod.util.ModKeybinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -28,6 +32,14 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import team.lodestar.lodestone.registry.common.particle.LodestoneParticleTypes;
+import team.lodestar.lodestone.systems.particle.SimpleParticleOptions;
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType;
+import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
+
 
 import static com.hatedero.compendiummod.mana.ModAttachments.*;
 import static com.hatedero.compendiummod.mana.spell.SpellRegistry.SPELLS;
@@ -70,13 +82,25 @@ public class ModClientEvents {
             if (spell == null || spell instanceof EmptySpell) return;
 
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
-            ParticleHelper.spawnBasicParticle(level, getPointInFront(player, 1));
             player.displayClientMessage(Component.literal("CHARGING ").append(Component.translatable(translationKey)).append(Component.literal(" : " + slot.chargeLevel())), true);
+
+            if (player.tickCount%20 == 0) {
+                WorldParticleBuilder.create(ModParticles.RED_SPARK.get())
+                        .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
+                        .setScaleData(GenericParticleData.create(2f))
+                        .setTransparencyData(GenericParticleData.create(1.0f))
+                        .setLifetime(20)
+                        .enableNoClip()
+                        .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.WITH_AGE)
+                        .setFullBrightLighting()
+                        .spawn(level, getPointInFront(player, 1));
+                player.sendSystemMessage(Component.literal("Should spawn particle"));
+            }
         }
     }
 
     public static Vec3 getPointInFront(LivingEntity entity, double distance) {
-        Vec3 eyePos = entity.getEyePosition().add(0,-entity.getBbHeight() * 0.2,0);
+        Vec3 eyePos = entity.getEyePosition();
 
         Vec3 lookDir = entity.getLookAngle();
 
@@ -84,8 +108,8 @@ public class ModClientEvents {
     }
 
     @SubscribeEvent
-    public static void onParticleFactoryRegistration(RegisterParticleProvidersEvent event) {
-        //event.registerSpriteSet(MyModParticles.CUSTOM_SPRITE.get(), LodestoneParticleSpawner.SpritePicker::new);
+    public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ModParticles.RED_SPARK.get(), LodestoneWorldParticleType.Factory::new);
     }
 
     @SubscribeEvent
@@ -97,7 +121,7 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntities.BLUE_PROJECTILE.get(), NoopRenderer::new);
+        event.registerEntityRenderer(ModEntities.BLUE_PROJECTILE.get(), FlatSpriteRenderer::new);
         event.registerEntityRenderer(ModEntities.RED_PROJECTILE.get(), NoopRenderer::new);
         event.registerEntityRenderer(ModEntities.MANA_BOLT_PROJECTILE.get(), NoopRenderer::new);
     }
