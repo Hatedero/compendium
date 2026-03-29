@@ -22,6 +22,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -84,19 +85,24 @@ public class ModClientEvents {
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
             player.displayClientMessage(Component.literal("CHARGING ").append(Component.translatable(translationKey)).append(Component.literal(" : " + slot.chargeLevel())), true);
 
-            if (player.tickCount%20 == 0) {
-                WorldParticleBuilder.create(ModParticles.RED_SPARK.get())
-                        .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
-                        .setScaleData(GenericParticleData.create(2f))
-                        .setTransparencyData(GenericParticleData.create(1.0f))
-                        .setLifetime(20)
-                        .enableNoClip()
-                        .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.WITH_AGE)
-                        .setFullBrightLighting()
-                        .spawn(level, getPointInFront(player, 1));
-                player.sendSystemMessage(Component.literal("Should spawn particle"));
+            if (player.tickCount%3 == 0 && player.getRandom().nextBoolean()) {
+                ParticleHelper.spawnRandomStarAt(level, getPointInFrontWithRandomOffset(player, 1, -0.5, 0.5));
             }
         }
+    }
+
+    public static Vec3 getPointInFrontWithRandomOffset(LivingEntity entity, double distance, double minOffset, double maxOffset) {
+        RandomSource random = entity.getRandom();
+        Vec3 forward = entity.getLookAngle().normalize();
+
+        Vec3 right = forward.cross(new Vec3(0, 1, 0)).normalize();
+        Vec3 actualUp = right.cross(forward).normalize();
+
+        double horizontalOffset = minOffset + (random.nextDouble() * (maxOffset - minOffset));
+        double verticalOffset = minOffset + (random.nextDouble() * (maxOffset - minOffset));
+
+        Vec3 centerPoint = entity.getEyePosition().add(forward.scale(distance));
+        return centerPoint.add(right.scale(horizontalOffset)).add(actualUp.scale(verticalOffset));
     }
 
     public static Vec3 getPointInFront(LivingEntity entity, double distance) {
@@ -109,7 +115,9 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(ModParticles.RED_SPARK.get(), LodestoneWorldParticleType.Factory::new);
+        event.registerSpriteSet(ModParticles.SPARK.get(), LodestoneWorldParticleType.Factory::new);
+        event.registerSpriteSet(ModParticles.SPARK2.get(), LodestoneWorldParticleType.Factory::new);
+        event.registerSpriteSet(ModParticles.SPARK3.get(), LodestoneWorldParticleType.Factory::new);
     }
 
     @SubscribeEvent

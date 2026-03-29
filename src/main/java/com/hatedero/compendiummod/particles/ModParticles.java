@@ -15,8 +15,14 @@ public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLES =
             DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, CompendiumMod.MODID);
 
-    public static final DeferredHolder<ParticleType<?>, LodestoneWorldParticleType> RED_SPARK =
-            PARTICLES.register("red_spark", () -> new LodestoneWorldParticleType());
+    public static final DeferredHolder<ParticleType<?>, LodestoneWorldParticleType> SPARK =
+            PARTICLES.register("spark1", () -> new LodestoneWorldParticleType());
+
+    public static final DeferredHolder<ParticleType<?>, LodestoneWorldParticleType> SPARK2 =
+            PARTICLES.register("spark2", () -> new LodestoneWorldParticleType());
+
+    public static final DeferredHolder<ParticleType<?>, LodestoneWorldParticleType> SPARK3 =
+            PARTICLES.register("spark3", () -> new LodestoneWorldParticleType());
 
 
     public static void register(IEventBus eventBus) {
