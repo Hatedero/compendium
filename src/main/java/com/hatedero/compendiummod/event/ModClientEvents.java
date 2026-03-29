@@ -85,39 +85,21 @@ public class ModClientEvents {
             String translationKey = "spell." + SPELLS.getRegistry().get().getKey(spell).toLanguageKey();
             player.displayClientMessage(Component.literal("CHARGING ").append(Component.translatable(translationKey)).append(Component.literal(" : " + slot.chargeLevel())), true);
 
-            if (player.tickCount%3 == 0 && player.getRandom().nextBoolean()) {
+            spell.chargeTick(level, player, slot.chargeLevel(), slot.slotName());
+            /*if (player.tickCount%3 == 0 && player.getRandom().nextBoolean()) {
                 ParticleHelper.spawnRandomStarAt(level, getPointInFrontWithRandomOffset(player, 1, -0.5, 0.5));
-            }
+            }*/
         }
-    }
-
-    public static Vec3 getPointInFrontWithRandomOffset(LivingEntity entity, double distance, double minOffset, double maxOffset) {
-        RandomSource random = entity.getRandom();
-        Vec3 forward = entity.getLookAngle().normalize();
-
-        Vec3 right = forward.cross(new Vec3(0, 1, 0)).normalize();
-        Vec3 actualUp = right.cross(forward).normalize();
-
-        double horizontalOffset = minOffset + (random.nextDouble() * (maxOffset - minOffset));
-        double verticalOffset = minOffset + (random.nextDouble() * (maxOffset - minOffset));
-
-        Vec3 centerPoint = entity.getEyePosition().add(forward.scale(distance));
-        return centerPoint.add(right.scale(horizontalOffset)).add(actualUp.scale(verticalOffset));
-    }
-
-    public static Vec3 getPointInFront(LivingEntity entity, double distance) {
-        Vec3 eyePos = entity.getEyePosition();
-
-        Vec3 lookDir = entity.getLookAngle();
-
-        return eyePos.add(lookDir.scale(distance));
     }
 
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(ModParticles.SPARK.get(), LodestoneWorldParticleType.Factory::new);
-        event.registerSpriteSet(ModParticles.SPARK2.get(), LodestoneWorldParticleType.Factory::new);
-        event.registerSpriteSet(ModParticles.SPARK3.get(), LodestoneWorldParticleType.Factory::new);
+        ModParticles.PARTICLES.getEntries().forEach(holder -> {
+            if (holder.get() instanceof LodestoneWorldParticleType type) {
+                event.registerSpriteSet(type, LodestoneWorldParticleType.Factory::new);
+            }
+                }
+        );
     }
 
     @SubscribeEvent

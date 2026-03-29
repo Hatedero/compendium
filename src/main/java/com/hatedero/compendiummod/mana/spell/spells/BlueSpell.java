@@ -14,6 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 
+import static com.hatedero.compendiummod.util.SpaceHelper.getPointInFrontWithRandomOffset;
+
 public class BlueSpell extends Spell {
     private ModEntityBehavior behavior;
 
@@ -32,6 +34,11 @@ public class BlueSpell extends Spell {
 
     @Override
     public void chargeEffect(Level level, Player player, int manaLevel) {
+        if (level.isClientSide()) {
+            if (player.tickCount % 3 == 0 && player.getRandom().nextBoolean()) {
+                ParticleHelper.spawnRandomStarAt(level, getPointInFrontWithRandomOffset(player, 1, -0.5, 0.5));
+            }
+        }
     }
 
     @Override

@@ -5,7 +5,9 @@ import com.hatedero.compendiummod.mana.ModAttributes;
 import com.hatedero.compendiummod.mana.spell.spells.EmptySpell;
 import com.hatedero.compendiummod.mana.spell.spellslot.PlayerSpellData;
 import com.hatedero.compendiummod.mana.spell.spellslot.SpellSlotData;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,9 +27,10 @@ public class SpellEventHandler {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer player) {
             handleSpellCharging(player);
-            handleLeftOverCharges(player);
             handleCooldowns(player);
         }
+        Player player = event.getEntity();
+        handleLeftOverCharges(player);
     }
 
     private static void handleCooldowns(ServerPlayer player) {
@@ -54,10 +57,8 @@ public class SpellEventHandler {
         player.setData(SPELL_DATA, newData);
     }
 
-    private static void handleLeftOverCharges(ServerPlayer player) {
+    private static void handleLeftOverCharges(Player player) {
         Level level = player.level();
-
-        if (level.isClientSide()) return;
 
         PlayerSpellData data = player.getData(SPELL_DATA);
 

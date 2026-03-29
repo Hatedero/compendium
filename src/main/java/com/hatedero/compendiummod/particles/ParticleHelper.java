@@ -28,6 +28,18 @@ public class ParticleHelper {
                 .spawn(level, pos.x, pos.y, pos.z);
     }
 
+    public static void spawnImpactAt(Level level, Vec3 pos) {
+        WorldParticleBuilder.create(ModParticles.IMPACT_MASSIVE.get())
+                .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
+                .setScaleData(GenericParticleData.create(2.5f))
+                .setTransparencyData(GenericParticleData.create(1f))
+                .setLifetime(6)
+                .enableNoClip()
+                .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.WITH_AGE)
+                .setFullBrightLighting()
+                .spawn(level, pos);
+    }
+
     public static void spawnRandomStarAt(Level level, Vec3 pos) {
         Random random = new Random();
 
