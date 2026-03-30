@@ -3,7 +3,7 @@ package com.hatedero.compendiummod.mana;
 import net.minecraft.world.entity.player.Player;
 
 public class ManaHandler {
-    public static void setMana(Player player, float newMana) {
+    /*public static void setMana(Player player, float newMana) {
         float oldMana = this.mana;
         this.mana = Math.max(0, Math.min(newMana, maxMana));
 
@@ -16,5 +16,5 @@ public class ManaHandler {
             int chunksLost = oldBucket - newBucket;
             this.onManaThresholdDropped(chunksLost);
         }
-    }
+    }*/
 }
