@@ -32,7 +32,7 @@ public class RepairItemSpell extends Spell {
 
     @Override
     public void chargeEffect(Level level, Player player, int manaLevel) {
-        if (player.getItemInHand(InteractionHand.MAIN_HAND).isDamaged()) {
+        if (!level.isClientSide() && player.getItemInHand(InteractionHand.MAIN_HAND).isDamaged()) {
             ItemStack item = player.getItemInHand(InteractionHand.MAIN_HAND);
             int repairAmount = (int) (1 + (item.getMaxDamage()*efficiency));
             int currentDamage = item.getDamageValue();
