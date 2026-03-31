@@ -30,13 +30,15 @@ public class MadeInHeavenSpell extends Spell {
 
     @Override
     public void chargeEffect(Level level, Player player, int manaLevel) {
-        if(level instanceof ServerLevel serverLevel && level.getGameTime() % 5 == 0) {
-            serverLevel.setDayTime(level.getDayTime() + 1200);
+        if(level instanceof ServerLevel serverLevel) {
+            serverLevel.setDayTimePerTick(serverLevel.getDayTimePerTick() + 1);
         }
     }
 
     @Override
     public void releaseEffect(Level level, Player player, int manaLevel) {
-
+        if(level instanceof ServerLevel serverLevel) {
+            serverLevel.setDayTimePerTick(1);
+        }
     }
 }
