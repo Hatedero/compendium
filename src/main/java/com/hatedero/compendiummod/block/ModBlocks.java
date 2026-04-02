@@ -34,6 +34,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> OSTEANIAN_GRATED_BLOCK = registerBlock("osteanian_grated_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_GRATE).sound(SoundType.SCULK)));
 
+    public static final DeferredBlock<Block> OSTEANIAN_BLOCK = registerBlock("osteanian_block",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).sound(SoundType.SCULK)));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

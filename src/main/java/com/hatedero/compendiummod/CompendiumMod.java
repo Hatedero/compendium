@@ -34,7 +34,6 @@ public class CompendiumMod {
 
         NeoForge.EVENT_BUS.register(this);
 
-
         ModParticles.register(modEventBus);
 
         ModItems.register(modEventBus);
