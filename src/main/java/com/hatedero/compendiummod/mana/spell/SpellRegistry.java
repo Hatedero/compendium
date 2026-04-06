@@ -77,6 +77,9 @@ public class SpellRegistry {
     public static final DeferredHolder<Spell, Spell> REPAIR_ITEM = SPELLS.register("repair_item",
             () -> new RepairItemSpell(1, 200, 20, 0.005f));
 
-        public static final DeferredHolder<Spell, Spell> MADE_IN_HEAVEN = SPELLS.register("made_in_heaven",
-            () -> new MadeInHeavenSpell(1, 200, 20));
+    public static final DeferredHolder<Spell, Spell> MADE_IN_HEAVEN = SPELLS.register("made_in_heaven",
+            () -> new MadeInHeavenSpell(1, -1, 20));
+
+    public static final DeferredHolder<Spell, Spell> LONGINUS_SPEAR = SPELLS.register("longinus_spear",
+            () -> new LonginusSpearSpell(1, 200, 20));
 }

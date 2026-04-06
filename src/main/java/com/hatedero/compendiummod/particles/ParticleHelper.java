@@ -32,6 +32,7 @@ public class ParticleHelper {
         WorldParticleBuilder.create(ModParticles.IMPACT_MASSIVE.get())
                 .setRenderType(LodestoneWorldParticleRenderType.LUMITRANSPARENT)
                 .setScaleData(GenericParticleData.create(2.5f))
+                .setColorData(ColorParticleData.create(Color.WHITE, Color.RED))
                 .setTransparencyData(GenericParticleData.create(1f))
                 .setLifetime(6)
                 .enableNoClip()
